@@ -19,9 +19,9 @@ This repo is maintained by [Yuta Toyama](https://yutatoyama.github.io/).
 9. Instrumental Variable 2 [[Note]](05_IV/IV2.html)
 10. Panel Data 1 [[Note]](06_Panel/Panel1.html)
 11. Panel Data 2 [[Note]](06_Panel/Panel2.html)
-12. Introduction to Causal Inference [[Slide]](07_ProgramEvaluation/Slide_Causal1_Intro.pdf)
-13. Difference-in-differences [[Slide]](07_ProgramEvaluation/Slide_Causal2_DID.pdf)
-14. Regression Discontinuity [[Slide]](07_ProgramEvaluation/Slide_Causal3_RD.pdf)
+12. Introduction to Causal Inference [[Slide]](07_ProgramEvaluation/Slide_Causal1_Intro.pdf) [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)
+13. Difference-in-differences [[Slide]](07_ProgramEvaluation/Slide_Causal2_DID.pdf) [[Note]](07_ProgramEvaluation/ProgramEvaluation2.html)
+14. Regression Discontinuity [[Slide]](07_ProgramEvaluation/Slide_Causal3_RD.pdf) [[Note]](07_ProgramEvaluation/ProgramEvaluation3.html)
 
 
 ## License
