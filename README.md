@@ -1,10 +1,12 @@
-# Lecture Material for Applied Econometrics
+# Lecture Material for Applied Econometrics (Spring 2020)
 
 ## Introduction
 This is the git repo for applied econometrics course for undergraduate students at Waseda university. 
 This repo is maintained by [Yuta Toyama](https://yutatoyama.github.io/). 
 
-## Lecture note
+## Lecture note 
+
+**Notice: Notes are tentative.**
 
 1. Introduction [[Note]](01_Introduction/Introduction_doc.html)
 2. R Basics 1 [[Note]](02_RIntro/02_programmingR.html)
@@ -23,16 +25,4 @@ This repo is maintained by [Yuta Toyama](https://yutatoyama.github.io/).
 
 
 ## License
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
-
-You are free to:
-
-* Share — copy and redistribute the material in any medium or format
-* Adapt — remix, transform, and build upon the material
-
-under the following terms:
-
-* Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. We are happy to suggest the following citation if you use our material in your work:
-
-
-
+This work is licensed under GNU General Public License v3.0.
