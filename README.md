@@ -27,8 +27,8 @@ The Github repo is maintained by [Yuta Toyama](https://yutatoyama.github.io/).
 | 10  | Panel data 1            | [[Note]](06_Panel/Panel1.html)                          | [[Slide]](06_Panel/Panel1.pdf)                          |
 | 11  | Panel data 2            | [[Note]](06_Panel/Panel2.html)                          | [[Slide]](06_Panel/Panel2.pdf)                          |
 | 12  | Program Evaluation 1    | [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation1.pdf)  |
-| 13  | Program Evaluation 2    | [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation1.pdf)  |
-| 14  | Program Evaluation 3    | [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation1.pdf)  |
+| 13  | Program Evaluation 2    | [[Note]](07_ProgramEvaluation/ProgramEvaluation2.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation2.pdf)  |
+| 14  | Program Evaluation 3    | [[Note]](07_ProgramEvaluation/ProgramEvaluation3.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation3.pdf)  |
 
 ## License
 This work is licensed under GNU General Public License v3.0.
