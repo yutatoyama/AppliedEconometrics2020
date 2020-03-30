@@ -15,7 +15,7 @@ The Github repo is maintained by [Yuta Toyama](https://yutatoyama.github.io/).
 
 | No. | Topic                   | Note                                                    | Slide                                                   |
 |-----|-------------------------|---------------------------------------------------------|---------------------------------------------------------|
-| 1   | Introduction            | [[Note]](01_Introduction/Introduction_doc.html)         | [[Slide]](01_Introduction/Introduction_doc.pdf)         |
+| 1   | Introduction            | [[Note]](01_Introduction/Introduction.html)             | [[Slide]](01_Introduction/Introduction.pdf)         |
 | 2   | R Basics 1              | [[Note]](02_RIntro/programmingR1.html)                  | [[Slide]](02_RIntro/programmingR1.pdf)                  |
 | 3   | R Basics 2              | [[Note]](02_RIntro/programmingR2.html)                  | [[Slide]](02_RIntro/programmingR2.pdf)                  |
 | 4   | Review of Statistics    | [[Note]](03_Stat/Statistics.html)                       | [[Slide]](03_Stat/Statistics.pdf)                       |
