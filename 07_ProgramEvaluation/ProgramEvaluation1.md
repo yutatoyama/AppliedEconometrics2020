@@ -1,24 +1,32 @@
 ---
 title: 'Program Evaluation (Causal Inference) 1: Introduction'
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: 2020-03-30"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-Introduction
-============
+# Introduction
 
-Introduction
+## Introduction
 
 -   Program Evaluation, or Causal Inference
 
@@ -39,7 +47,7 @@ Introduction
     -   especially in observational data (in comparison with
         experimental data)
 
-Overview
+## Overview
 
 -   Introduce Rubin's causal model (potential outcome framework)
 
@@ -57,7 +65,7 @@ Overview
 
     5.  Regression Discontinuity Design (week after next)
 
-Reference
+## Reference
 
 -   Angrist and Pischke:
 
@@ -69,10 +77,9 @@ Reference
 
 -   Ito: Data Bunseki no Chikara (in Japanese)
 
-Framework
-=========
+# Framework
 
-Framework
+## Framework
 
 -   $Y_{i}$: observed outcome for person $i$
 
@@ -95,7 +102,7 @@ Framework
     Y_{0i} & if\ D_{i}=0
     \end{cases}\end{aligned}$$
 
-Two Key points
+## Two Key points
 
 -   Point 1: Fundamental problem of program evaluation
 
@@ -114,7 +121,7 @@ Two Key points
         -   Ex: If everyone takes the job training, the equilibrium wage
             would change, which affects the individual outcome.
 
-Parameters of Interest
+## Parameters of Interest
 
 -   Define the individual treatment effect $Y_{1i}-Y_{0i}$
 
@@ -136,7 +143,7 @@ Parameters of Interest
     -   Average treatment effect conditional on covariates $X_{i}$:
         $ATE(x)=E[Y_{1i}-Y_{0i}|D_{i}=1,X_{i}=x]$
 
-Relation to Regression Analysis
+## Relation to Regression Analysis
 
 -   Assume that
 
@@ -153,7 +160,7 @@ Relation to Regression Analysis
     -   Though, in practice, estimation of treatment effect relies on a
         parametric specification.
 
-Selection Bias
+## Selection Bias
 
 -   Consider the comparison of average outcomes between treatment and
     control group
@@ -172,7 +179,7 @@ Selection Bias
     -   Cannot observe $E[Y_{0i}|D_{i}=1]$: the outcome of people in
         treatment group when they are NOT treated (counterfactual).
 
-Solutions
+## Solutions
 
 -   The core of program evaluation is how to identify (estimate) the
     treatment effect parameters.
@@ -203,10 +210,9 @@ Solutions
 -   Others: Bound approach, synthetic control method, regression kink
     design, etc..
 
-RCT
-===
+# RCT
 
-What is RCT ?
+## What is RCT ?
 
 -   RCT: Randomized Controlled Trial
 
@@ -223,13 +229,13 @@ What is RCT ?
 
 -   Starts with clinical trial: measure the effects of medicine.
 
-Example from Development Economics
+## Example from Development Economics
 
 -   Esther Duflo "Social experiments to fight poverty"
 
     -   <https://www.ted.com/talks/esther_duflo_social_experiments_to_fight_poverty?language=en>
 
-Framework
+## Framework
 
 -   Key assumption: Treatment $D_{i}$ is independent with potential
     outcomes $(Y_{0i},Y_{1i})$ $$D_{i}\perp(Y_{0i},Y_{1i})$$
@@ -244,7 +250,7 @@ Framework
 -   Difference of the sample average is consistent estimator for the ATT
     $$\frac{\frac{1}{N}\sum_{i=1}^{N}Y_{i}\cdot\mathbf{1}\{D_{i}=1\}}{\frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\{D_{i}=1\}}-\frac{\frac{1}{N}\sum_{i=1}^{N}Y_{i}\cdot\mathbf{1}\{D_{i}=0\}}{\frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\{D_{i}=0\}}$$
 
-Example: RAND Health Insurance Experiment (HIE)
+## Example: RAND Health Insurance Experiment (HIE)
 
 -   Taken from Angrist and Pischke (2014, Sec 1.1)
 
@@ -268,7 +274,7 @@ Example: RAND Health Insurance Experiment (HIE)
     -   Catastrophic coverage: 95% of health costs. No upper limit.
         Approximate "no insurance"
 
-First step: Balance Check
+## First step: Balance Check
 
 ![image](figure_table/MMtbl13.pdf)
 
@@ -277,7 +283,7 @@ First step: Balance Check
 
 -   Assignment of health insurance plans is indeed random!
 
-Results of RAND HIE
+## Results of RAND HIE
 
 ![image](figure_table/MMtbl14.pdf)
 
@@ -285,10 +291,9 @@ Results of RAND HIE
 
 -   But, HI has no statistically significant effect on health outcomes
 
-Matching
-========
+# Matching
 
-Matching
+## Matching
 
 -   Idea: Compare **individuals with the same characteristics $X$**
     across treatment and control groups
@@ -308,7 +313,7 @@ Matching
     -   Given $x$, we should be able to observe people from both control
         and treatment group.
 
-Identification
+## Identification
 
 -   The assumption implies that $$\begin{aligned}
     E[Y_{1i}|D_{i} & =1,X_{i}]=E[Y_{1i}|D_{i}=0,X_{i}]=E[Y_{1i}|X_{i}]\\
@@ -324,7 +329,7 @@ Identification
 -   Intuition: Comparing the outcome across control and treatment groups
     after conditioning on $X_{i}$
 
-ATT and ATE
+## ATT and ATE
 
 -   ATT is given by $$\begin{aligned}
     ATT & =E[Y_{1i}-Y_{0i}|D_{i}=1]\\
@@ -337,7 +342,7 @@ ATT and ATE
     = & \int E[Y_{i}|D_{i}=1,X_{i}=x]f_{X_{i}}(x)dx\\
     = & +\int E[Y_{i}|D_{i}=0,X_{i}=x]f_{X_{i}}(x)dx\end{aligned}$$
 
-Estimation Methods
+## Estimation Methods
 
 -   We need to estimate $E[Y_{i}|D_{i}=1,X_{i}=x]$ and
     $E[Y_{i}|D_{i}=0,X_{i}=x]$
@@ -361,7 +366,7 @@ Regression, or Analogue Approach
 
 -   How to estimate $\mu_{k}(x)=E[Y_{i}|D_{i}=k,X_{i}=x]$ ?
 
-Nonparametric Estimation
+## Nonparametric Estimation
 
 -   Suppose that $X_{i}\in\{x_{1},\cdots,x_{K}\}$ is discrete with small
     $K$
@@ -381,7 +386,7 @@ Nonparametric Estimation
 
 -   If $X$ can take continuum value, you can use kernel regression.
 
-Parametric Estimation, or going back to linear regression
+## Parametric Estimation, or going back to linear regression
 
 -   If you put parametric assumption such as $$\begin{aligned}
     E[Y_{i}|D_{i}=0,X_{i}=x] & =\beta'x_{i}\\
@@ -400,7 +405,7 @@ Parametric Estimation, or going back to linear regression
         important. This can be combined with other empirical strategies
         (IV, DID, etc).
 
-$M-$Nearest Neighborhood Matching
+## $M-$Nearest Neighborhood Matching
 
 -   Fine the counterpart in other group that is close to me.
 
@@ -424,10 +429,9 @@ $M-$Nearest Neighborhood Matching
 
 -   R has several packages for this.
 
-Going Forward
-=============
+# Going Forward
 
-Other Approaches
+## Other Approaches
 
 -   Instrumental Variable: same idea.
 

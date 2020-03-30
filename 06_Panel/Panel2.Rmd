@@ -1,21 +1,31 @@
 ---
-title: "Panel Data 2"
+title: "Panel Data 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: `r Sys.Date()`"
+fig_width: 6 
+fig_height: 4 
 output: 
+  
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-# Panel Data 2: Implementation in R
+# Panel
 
 ## Preliminary:
 
@@ -35,6 +45,8 @@ data(Fatalities)
 str(Fatalities)
 
 ```
+
+--- 
 
 - As a preliminary analysis, let's plot the relationship between fatality rate and beer tax in 1998.
 
@@ -60,6 +72,9 @@ plot(x = data$beertax,
 ```
 
 - Positive correlation between alcohol tax and traffic accident. Possibly due to omitted variable bias. 
+
+
+--- 
 
 - Run fixed effect regression using `felm` command in `lfe` package. 
     - https://www.rdocumentation.org/packages/lfe/versions/2.8-3/topics/felm
@@ -90,6 +105,8 @@ stargazer::stargazer(result_ols, result_stateFE, result_bothFE, type = "text")
 
 ```
 
+---
+
 - What if we do not use the cluster-robust standard error?
 
 ```{r}
@@ -105,6 +122,7 @@ stargazer::stargazer(result_wo_CRS, result_w_CRS,  type = "text", se = list(summ
 
 ```
 
+# Panel + IV
 
 ## Panel Data with Instrumental Variables
 
@@ -124,6 +142,8 @@ where
     - $CigTax_{it}$: the cigarett-specific taxes
     
     
+--- 
+
 ```{r}
 
 # load the data set and get an overview
@@ -138,6 +158,8 @@ CigarettesSW %>%
 
 ```
     
+--- 
+
 - Run IV regression with panel data.
 
 ```{r}
@@ -159,9 +181,9 @@ stargazer::stargazer(result_1, result_2, result_3, result_4, type = "text")
 
 ```
 
-## Some tips in `felm` command
+# `felm` command
 
-### How to report heteroskedasticity robust standard error in `stargazer`
+## How to report heteroskedasticity robust standard error in `stargazer`
 
 ```{r}
 
@@ -174,7 +196,7 @@ stargazer::stargazer(result_1, type = "text",
 
 ```
 
-### How to conduct F test after `felm`
+## How to conduct F test after `felm`
 
 ```{r}
 

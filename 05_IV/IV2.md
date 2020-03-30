@@ -1,21 +1,39 @@
 ---
-title: "Instrumental Variable Estimation 2"
+title: "Instrumental Variable Estimation 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: 2020-03-30"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-# Instrumental Variable 2: Implementation in R
+# Introduction
+
+## Introduction
+
+- I cover three examples of instrumental variable regressions.
+    1. Wage regression
+    2. Demand curve
+    3. Effects of Voter Turnout
+
+# Wage regression
 
 ## Example 1: Wage regression
 
@@ -35,6 +53,8 @@ data <- read.dta("MROZ.DTA")
 ```
 ## Warning in read.dta("MROZ.DTA"): cannot read factor labels from Stata 5 files
 ```
+
+---
 
 - Describe data
 
@@ -89,6 +109,8 @@ stargazer(data, type = "text")
 ## -------------------------------------------------------------------
 ```
 
+---
+
 - Consider the wage regression 
 $$
 \log(w_i) = \beta_0 + \beta_1 educ_i + \beta_2 exper_i + \beta_3 exper_i^2 + \epsilon_i
@@ -96,6 +118,8 @@ $$
 - We assume that $exper_i$ is exogenous but $educ_i$ is endogenous.
 - As an instrument for $educ_i$, we use the years of schooling for his or her father and mother, which we call $fathereduc_i$ and $mothereduc_i$. 
 - Discussion on these IVs will be later. 
+
+---
 
 
 ```r
@@ -217,6 +241,8 @@ stargazer(result_OLS, result_IV, type ="text", se = rob_se)
 ## Note:                                   *p<0.1; **p<0.05; ***p<0.01
 ```
 
+---
+
 - How about the first stage? You should always check this!!
 
 
@@ -231,26 +257,13 @@ linearHypothesis(result_1st,
                  vcov = vcovHC, type = "HC1")
 ```
 
-```
-## Linear hypothesis test
-## 
-## Hypothesis:
-## fatheduc = 0
-## motheduc = 0
-## 
-## Model 1: restricted model
-## Model 2: educ ~ motheduc + fatheduc + exper + expersq
-## 
-## Note: Coefficient covariance matrix supplied.
-## 
-##   Res.Df Df      F                Pr(>F)    
-## 1    425                                    
-## 2    423  2 48.644 < 0.00000000000000022 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"425","2":"NA","3":"NA","4":"NA","_rn_":"1"},{"1":"423","2":"2","3":"48.64384","4":"0.00000000000000000009671159","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
-### Discussion on IV
+## Discussion on IV
 
 - Labor economists have used family background variables as IVs for education. 
 - Relevance: OK from the first stage regression. 
@@ -259,6 +272,8 @@ linearHypothesis(result_1st,
 - Discussion on the validity of instruments is crucial in empirical research. 
 
 
+# Demand curve
+
 ## Example 2: Estimation of the Demand for Cigaretts
 
 - Demand model is a building block in many branches of Economics. 
@@ -266,6 +281,8 @@ linearHypothesis(result_1st,
 - Smoking is a prominent example as it is related to many illnesses and negative externalities.
 - It is plausible that cigarette consumption can be reduced by taxing cigarettes more heavily. 
 - Question: how much taxes must be increased to reach a certain reduction in cigarette consumption? -> Need to know **price elasticity of demand** for cigaretts.
+
+---
 
 - Use `CigarrettesSW` in the package `AER`.
 - a panel data set that contains observations on cigarette consumption and several economic indicators for all 48 continental federal states of the U.S. from 1985 to 1995.
@@ -276,6 +293,7 @@ linearHypothesis(result_1st,
     - Panel data $y_{it}$: income of person $i$ in year $t$.
 - We will see more on panel data later in this course. For now, we use the panel data as just  cross-sectional data (**pooled cross-sections**)
 
+---
 
 
 
@@ -305,6 +323,8 @@ summary(CigarettesSW)
 ## 
 ```
 
+---
+
 - Consider the following model
 $$
 \log (Q_{it}) = \beta_0 + \beta_1 \log (P_{it}) + \beta_2 \log(income_{it}) + u_{it}
@@ -319,7 +339,7 @@ where
         - Exogenous(indepndent) since the sales tax does not influence demand directly, but indirectly through the price.
     - $CigTax_{it}$: the cigarett-specific taxes
       
-
+---
 
 
 ```r
@@ -330,6 +350,8 @@ CigarettesSW %>%
   mutate( salestax = (taxs - tax) / cpi ) %>% 
   mutate( cigtax = tax/cpi ) -> Cigdata
 ```
+
+---
 
 - Let's run the regressions
 
@@ -382,6 +404,7 @@ stargazer(cig_ols, cig_ivreg, type ="text", se = rob_se)
 
 
 
+---
 
 - The first stage regression
 
@@ -398,25 +421,14 @@ linearHypothesis(result_1st,
                  vcov = vcovHC, type = "HC1")
 ```
 
-```
-## Linear hypothesis test
-## 
-## Hypothesis:
-## salestax = 0
-## cigtax = 0
-## 
-## Model 1: restricted model
-## Model 2: log(rprice) ~ log(rincome) + log(rincome) + salestax + cigtax
-## 
-## Note: Coefficient covariance matrix supplied.
-## 
-##   Res.Df Df      F                Pr(>F)    
-## 1     94                                    
-## 2     92  2 127.77 < 0.00000000000000022 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"94","2":"NA","3":"NA","4":"NA","_rn_":"1"},{"1":"92","2":"2","3":"127.767","4":"0.000000000000000000000000002807799","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
+
+# Voting
 
 ## Example 3: Effects of Turnout on Partisan Voting
 
@@ -424,6 +436,8 @@ linearHypothesis(result_1st,
     - Link: https://www.cambridge.org/core/journals/american-political-science-review/article/estimating-the-electoral-effects-of-voter-turnout/8A880C28E79BE770A5CA1A9BB6CF933C
 - Here, we will see a simplified version of their analysis. 
 - The dataset is [here](HansfordGomez_Data.csv)
+
+---
 
 
 ```r
@@ -496,6 +510,8 @@ stargazer::stargazer(as.data.frame(HGdata), type="text")
 ## -----------------------------------------------------------------------------------------
 ```
 
+---
+
 - Data description: 
 
 | Name | Description|
@@ -542,6 +558,8 @@ stargazer::stargazer(as.data.frame(HGdata), type="text")
 | State_DVS_lag | State-wide Dem vote share, lagged one election|
 | State_DVS_lag2 | State_DVS_lag squared|
 
+---
+
  - Consider the following regression 
  $$
 DemoShare_{it} = \beta_0 + \beta_1 Turnout_{it} + u_t + u_{it}
@@ -552,6 +570,8 @@ where
     - $u_t$: **Year fixed effects**. Time dummies for each presidential election year
 - As an IV, we use the rainfall measure denoted by `DNormPrcp_KRIG`
 
+
+---
 
 
 ```r
@@ -652,22 +672,8 @@ linearHypothesis(hg_1st,
                  vcov = vcovHC, type = "HC1")
 ```
 
-```
-## Linear hypothesis test
-## 
-## Hypothesis:
-## DNormPrcp_KRIG = 0
-## 
-## Model 1: restricted model
-## Model 2: Turnout ~ factor(Year) + DNormPrcp_KRIG
-## 
-## Note: Coefficient covariance matrix supplied.
-## 
-##   Res.Df Df      F           Pr(>F)    
-## 1  27387                               
-## 2  27386  1 44.029 0.00000000003296 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-- We will see this paper more in excercise 4 (due on July 9th).
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"27387","2":"NA","3":"NA","4":"NA","_rn_":"1"},{"1":"27386","2":"1","3":"44.02885","4":"0.00000000003296046","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>

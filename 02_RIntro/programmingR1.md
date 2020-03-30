@@ -1,26 +1,31 @@
 ---
 title: "R Basics 1"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: 2020-03-30"
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
     toc_depth: 2
     toc_float: true
     keep_md: true
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
 ---
 
-# Acknowledgement
+
+
+# Data 
+
+## Acknowledgement
   
    This note is largely based on Applied Statistics with `R`. https://daviddalpiaz.github.io/appliedstats/
-
-
-# Data and Programming
 
 ## Data Types
 
@@ -57,10 +62,12 @@ output:
 | 3+        | Array           |                   |
 
 
+# Vector
+
 ## Vectors
 
 
-### Basics of vectors
+**Basics of vectors**
 
 - Many operations in `R` make heavy use of **vectors**. 
     - Vectors in `R` are indexed starting at `1`. 
@@ -74,6 +81,10 @@ c(1, 3, 5, 7, 8, 9)
 ```
 ## [1] 1 3 5 7 8 9
 ```
+
+---
+
+## Assignment
 
 - If we would like to store this vector in a **variable** we can do so with the **assignment** operator `=`. 
     - The variable `x` now holds the vector we just created, and we can access the vector by typing `x`.
@@ -97,6 +108,8 @@ x
 ```
 ## [1] 1 3 5 7 8 9
 ```
+
+---
 
 - The operator `=` and `<-` work as an assignment operator. 
     - You can use both. This does not matter usually.
@@ -125,7 +138,10 @@ c(42, TRUE)
 ```
 -->
 
-- A vector based on a sequence of numbers. 
+---
+
+## A sequence of numbers. 
+
 - The quickest and easiest way to do this is with the `:` operator, which creates a sequence of integers between two specified integers.
 
 
@@ -146,7 +162,7 @@ c(42, TRUE)
     - `R` both stores the vector in a variable called `y` and
     - automatically outputs `y` to the console.
 
-### Useful functions for creating vectors
+## Useful functions for creating vectors
 
 - Use the `seq()` function for a more general sequence.
 
@@ -172,6 +188,7 @@ seq(1.5, 4.2, 0.1)
 ## [20] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2
 ```
 
+--- 
 - The `rep()` function repeat a single value a number of times.
 
 
@@ -194,6 +211,9 @@ rep(x, times = 3)
 ##  [1] 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9
 ```
 
+
+---
+
 - We have now seen four different ways to create vectors:
     1. `c()`
     2. `:`
@@ -211,6 +231,11 @@ c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42, 2:4)
 ##  [1]  1  3  5  7  8  9  1  3  5  7  9  1  3  5  7  9  1  3  5  7  9  1  2  3 42
 ## [26]  2  3  4
 ```
+
+
+---
+
+## Length
 
 - The length of a vector can be obtained with the `length()` function.
 
@@ -231,7 +256,7 @@ length(y)
 ## [1] 100
 ```
 
-### Subsetting
+## Subsetting
 
 - Use square brackets, `[]`, to obtain a subset of a vector. 
 - We see that `x[1]` returns the first element.
@@ -261,6 +286,8 @@ x[3]
 ```
 ## [1] 5
 ```
+
+--- 
 
 - We can also exclude certain indexes, in this case the second element.
 
@@ -292,6 +319,9 @@ x[c(1,3,4)]
 ## [1] 1 5 7
 ```
 
+
+---
+
 - We could instead use a vector of logical values.
 
 
@@ -317,7 +347,6 @@ x[z]
 
 - One of the biggest strengths of `R` is its use of vectorized operations.    
     - Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. 
-    - `R` is not the fastest language, but it has a reputation for being slower than it really is.)
 
 
 - When a function like `log()` is called on a vector `x`, a vector is returned which has applied the function to each element of the vector  `x`.
@@ -332,6 +361,7 @@ x + 1
 ##  [1]  2  3  4  5  6  7  8  9 10 11
 ```
 
+
 ```r
 2 * x
 ```
@@ -339,6 +369,9 @@ x + 1
 ```
 ##  [1]  2  4  6  8 10 12 14 16 18 20
 ```
+
+---
+
 
 ```r
 2 ^ x
@@ -348,6 +381,7 @@ x + 1
 ##  [1]    2    4    8   16   32   64  128  256  512 1024
 ```
 
+
 ```r
 sqrt(x)
 ```
@@ -356,6 +390,7 @@ sqrt(x)
 ##  [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
 ##  [9] 3.000000 3.162278
 ```
+
 
 ```r
 log(x)
@@ -378,17 +413,16 @@ log(x)
 | `x != y` | `x` not equal to `y`             | `3 != 42`              | TRUE              |
 | `!x`     | not `x`                          | `!(3 > 42)`            | TRUE            |
 | `x | y`  | `x` or `y`                       | `(3 > 42) | TRUE`      | TRUE      |
-| `x & y`  | `x` and `y`                      | `(3 < 4) & ( 42 > 13)` | TRUE |
+| `x & y`  | `x` and `y`                      | `(3 < 4) & (42 > 13)` | TRUE |
+
+
+---
 
 - Logical operators are vectorized. 
 
 
 ```r
 x = c(1, 3, 5, 7, 8, 9)
-```
-
-
-```r
 x > 3
 ```
 
@@ -420,6 +454,8 @@ x != 3
 ## [1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
 ```
 
+---
+
 
 ```r
 x == 3 & x != 3
@@ -436,6 +472,8 @@ x == 3 | x != 3
 ```
 ## [1] TRUE TRUE TRUE TRUE TRUE TRUE
 ```
+
+---
 
 - This is extremely useful for subsetting.
 
@@ -457,7 +495,7 @@ x[x != 3]
 ```
 
 
-#### Short exercise 
+## Short exercise 
 
 1. Create the vector $z = (1,2,1,2,1,2)$, which has the same length as $x$. 
 2. Pick up the elements of $x$ which corresponds to 1 in the vector $z$. 
@@ -511,8 +549,8 @@ x + y
 ```
 
 ```
-## Warning in x + y: 長いオブジェクトの長さが短いオブジェクトの長さの倍数になってい
-## ません
+## Warning in x + y: longer object length is not a multiple of shorter object
+## length
 ```
 
 ```
@@ -553,8 +591,8 @@ length(y) / length(x)
 ```
 
 ```
-## Warning in x + y: 長いオブジェクトの長さが短いオブジェクトの長さの倍数になってい
-## ません
+## Warning in x + y: longer object length is not a multiple of shorter object
+## length
 ```
 
 ```
@@ -618,26 +656,18 @@ identical(x + y, rep(x, 10) + y)
 ```
 -->
 
-## Matrices
+# Matrix
 
-### Basics
+## Matrix Operation: Basics
+
 
 - `R` can also be used for **matrix** calculations. 
   - Matrices have rows and columns containing a single data type. 
-  
 - Matrices can be created using the `matrix` function. 
 
 
 ```r
 x = 1:9
-x
-```
-
-```
-## [1] 1 2 3 4 5 6 7 8 9
-```
-
-```r
 X = matrix(x, nrow = 3, ncol = 3)
 X
 ```
@@ -652,6 +682,8 @@ X
 - We are using two different variables: 
     - lower case `x`, which stores a vector and
     - capital `X`, which stores a matrix. 
+
+---
 
 - By default the `matrix` function reorders a vector into columns, but we can also tell `R` to use rows instead.
 
@@ -682,6 +714,8 @@ Z
 ## [2,]    0    0    0    0
 ```
 
+---
+
 - Matrices can be subsetted using square brackets, `[]`. 
 - However, since matrices are two-dimensional, we need to specify both a row and a column when subsetting.
 - Here we get the element in the first row and the second column. 
@@ -706,7 +740,9 @@ X[1, 2]
 ## [1] 4
 ```
 
-- We could also subset an entire row or column.
+--- 
+
+- We can also subset an entire row or column.
 
 
 ```r
@@ -725,6 +761,7 @@ X[, 2]
 ## [1] 4 5 6
 ```
 
+---
 
 - Matrices can also be created by combining vectors as columns, using `cbind`, or combining vectors as rows, using `rbind`.
 
@@ -758,6 +795,9 @@ rbind(x, rev(x), rep(1, 9))
 ##      1    1    1    1    1    1    1    1    1
 ```
 
+
+--- 
+
 - When using `rbind` and `cbind` you can specify "argument" names that will be used as column names.
 
 
@@ -779,7 +819,7 @@ cbind(col_1 = x, col_2 = rev(x), col_3 = rep(1, 9))
 ##  [9,]     9     1     1
 ```
 
-### Matrix calculations
+## Matrix calculations
 
 - Perform matrix calculations.
 
@@ -810,6 +850,8 @@ Y
 ## [3,]    7    4    1
 ```
 
+---
+
 
 ```r
 X + Y
@@ -822,6 +864,7 @@ X + Y
 ## [3,]   10   10   10
 ```
 
+
 ```r
 X - Y
 ```
@@ -833,6 +876,9 @@ X - Y
 ## [3,]   -4    2    8
 ```
 
+---
+
+
 ```r
 X * Y
 ```
@@ -843,6 +889,7 @@ X * Y
 ## [2,]   16   25   16
 ## [3,]   21   24    9
 ```
+
 
 ```r
 X / Y
@@ -857,10 +904,10 @@ X / Y
 
 - Note that `X * Y` is **not** matrix multiplication. 
 - It is element by element multiplication. (Same for `X / Y`). 
+
+--- 
+
 - Matrix multiplication uses `%*%`. 
-
-
-- `t()` which gives the transpose of a matrix 
 
 
 ```r
@@ -874,6 +921,9 @@ X %*% Y
 ## [3,]  138   84   30
 ```
 
+- `t()` which gives the transpose of a matrix 
+
+
 ```r
 t(X)
 ```
@@ -884,6 +934,8 @@ t(X)
 ## [2,]    4    5    6
 ## [3,]    7    8    9
 ```
+
+---
 
 - `solve()` which returns the inverse of a square matrix if it is invertible.
 
@@ -911,10 +963,14 @@ solve(Z)
 ## [3,]  0.01724138  0.02586207 0.06896552
 ```
 
+---
+
 - To verify that `solve(Z)` returns the inverse, we multiply it by `Z`. 
+<!--
     - We would expect this to return the identity matrix.
     - However we see that this is not the case due to some computational issues. 
     - However, `R` also has the `all.equal()` function which checks for equality, with some small tolerance which accounts for some computational issues.
+--> 
 
 
 ```r
@@ -922,14 +978,10 @@ solve(Z) %*% Z
 ```
 
 ```
-##                           [,1]                       [,2]
-## [1,] 1.00000000000000000000000 -0.00000000000000006245005
-## [2,] 0.00000000000000008326673  1.00000000000000022204460
-## [3,] 0.00000000000000002775558  0.00000000000000000000000
-##                           [,3]
-## [1,] 0.00000000000000000000000
-## [2,] 0.00000000000000005551115
-## [3,] 1.00000000000000000000000
+##              [,1]          [,2]         [,3]
+## [1,] 1.000000e+00 -6.245005e-17 0.000000e+00
+## [2,] 8.326673e-17  1.000000e+00 5.551115e-17
+## [3,] 2.775558e-17  0.000000e+00 1.000000e+00
 ```
 
 ```r
@@ -952,20 +1004,21 @@ all.equal(solve(Z) %*% Z, diag(3))
 ```
 
 
-
-#### Exercise
+## Exercise
 
 - Solve the following simultanoues equations using matrix calculation
-\[
-2x_1+3x_2	=10 \\
-5x_1+x_2	=20
-\]
+$$
+\begin{aligned}
+2x_1+3x_2	&=& 10 \\
+5x_1+x_2	&=& 20
+\end{aligned}
+$$
 - Hint: You can write this as $Ax=y$ where A is the 2-times-2 matrix, x and y are vectors with the length of 2. 
 
 
-### Getting information for matrix
+## Getting information of matrix
 
-- `R` has a number of matrix specific functions for obtaining dimension and summary information.
+- Matrix specific functions for obtaining dimension and summary information.
 
 
 ```r
@@ -995,6 +1048,9 @@ rowSums(X)
 ## [1]  9 12
 ```
 
+---
+
+
 ```r
 colSums(X)
 ```
@@ -1018,6 +1074,8 @@ colMeans(X)
 ```
 ## [1] 1.5 3.5 5.5
 ```
+
+---
 
 - The `diag()` function can be used in a number of ways. We can extract the diagonal of a matrix.
 
@@ -1269,7 +1327,9 @@ all.equal(crossprod(C_mat, C_mat), t(C_mat) %*% C_mat)
 ```
 -->
 
-## Lists
+# List
+
+## List
 
 - A list is a one-dimensional heterogeneous data structure. 
     - It is indexed like a vector with a single integer value, 
@@ -1292,6 +1352,9 @@ list(42, "Hello", TRUE)
 ## [1] TRUE
 ```
 
+---
+
+
 ```r
 ex_list = list(
   a = c(1, 2, 3, 4),
@@ -1301,6 +1364,8 @@ ex_list = list(
   e = diag(5)
 )
 ```
+
+---
 
 - Lists can be subset using two syntaxes, 
     1. the `$` operator, and 
@@ -1330,6 +1395,9 @@ ex_list$e
 ## [5,]    0    0    0    0    1
 ```
 
+--- 
+
+
 ```r
 ex_list[1:2]
 ```
@@ -1342,14 +1410,8 @@ ex_list[1:2]
 ## [1] TRUE
 ```
 
-```r
-ex_list[1]
-```
+---
 
-```
-## $a
-## [1] 1 2 3 4
-```
 
 ```r
 ex_list[c("e", "a")]
@@ -1368,6 +1430,9 @@ ex_list[c("e", "a")]
 ## [1] 1 2 3 4
 ```
 
+---
+
+
 ```r
 ex_list["e"]
 ```
@@ -1382,6 +1447,7 @@ ex_list["e"]
 ## [5,]    0    0    0    0    1
 ```
 
+
 ```r
 ex_list$d
 ```
@@ -1394,9 +1460,9 @@ ex_list$d
 
 - We will talk about Dataframe in the next chapter.
 
-## Programming Basics -Control flow-
+# Control flow
 
-### if/else
+## if/else syntax
 
 - The if/else syntax is:
 
@@ -1408,6 +1474,8 @@ if (...) {
   more R code
 }
 ```
+
+---
 
 - Example: To see whether x is large than y.
 
@@ -1435,6 +1503,8 @@ z
 ## [1] 16
 ```
 
+---
+
 - `R` also has a special function `ifelse()` 
     - It returns one of two specified values based on a conditional statement.
 
@@ -1458,6 +1528,8 @@ ifelse(fib > 6, "Foo", "Bar")
 ```
 ## [1] "Bar" "Bar" "Bar" "Bar" "Bar" "Foo" "Foo" "Foo"
 ```
+
+
 ## `for` loop
 
 - A `for` loop repeats the same procedure for the specified number of times
@@ -1476,6 +1548,8 @@ x
 ## [1] 22 24 26 28 30
 ```
 
+---
+
 - Note that this `for` loop is very normal in many programming languages.
 - In `R` we would not use a loop, instead we would simply use a vectorized operation.
     - `for` loop in `R` is known to be very slow.
@@ -1491,6 +1565,8 @@ x
 ## [1] 22 24 26 28 30
 ```
 
+# Function
+
 ## Functions
 
 - To use a function, 
@@ -1502,20 +1578,25 @@ x
 
 
 ```r
-# The following is just a demonstration, not the real function in R.
+# The following is just a demonstration, 
+# not the real function in R.
 function_name(arg1 = 10, arg2 = 20)
 ```
 
 - We can also write our own functions in `R`. 
+
+## Example
+
 - Example: "standardize" variables
 \[
 \frac{x - \bar{x}}{s}
 \]
-
 - When writing a function, there are three thing you must do.
     1. Give the function a name. Preferably something that is short, but descriptive.
     2. Specify the arguments using `function()`
     3. Write the body of the function within curly braces, `{}`.
+
+---
 
 
 ```r
@@ -1531,6 +1612,7 @@ standardize = function(x) {
 - The function has a single argument `x` which is used in the body of function. 
 - Note that the output of the final line of the body is what is returned by the function. 
 
+---
 
 - Let's test our function
 - Take a random sample of size `n = 10` from a normal distribution with a mean of `2` and a standard deviation of `5`.
@@ -1542,8 +1624,8 @@ test_sample
 ```
 
 ```
-##  [1] -0.1365785  4.5362536  0.1326706 -6.9072632 -1.2596742 -8.2171269
-##  [7]  5.1502627  6.0762168  5.3108700 -3.3842538
+##  [1] -3.1526696  0.6309771  3.9649879  2.3507166  3.7361776  6.9010731
+##  [7]  1.3665305  0.9355939  2.4036735  1.5121131
 ```
 
 ```r
@@ -1551,9 +1633,11 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1] -0.0516099355  0.8525892800  0.0004901075 -1.3617464421 -0.2689304538
-##  [6] -1.6152068152  0.9714008738  1.1505742204  1.0024786016 -0.6800394367
+##  [1] -1.9986285 -0.5492796  0.7278336  0.1094771  0.6401864  1.8525189
+##  [7] -0.2675214 -0.4325942  0.1297626 -0.2117551
 ```
+
+---
 
 - The same function can be written more simply.
 
@@ -1572,6 +1656,8 @@ power_of_num = function(num, power = 2) {
   num ^ power
 }
 ```
+
+---
 
 - Let's look at a number of ways that we could run this function to perform the operation `10^2` resulting in `100`.
 
@@ -1608,6 +1694,8 @@ power_of_num(power = 2, num = 10)
 ## [1] 100
 ```
 
+---
+
 - Note that without using the argument names, the order matters. The following code will not evaluate to the same output as the previous example.
 
 
@@ -1626,6 +1714,8 @@ power_of_num(2, 10)
 power_of_num(power = 5)
 ```
 
+---
+
 - To further illustrate a function with a default argument, we will write a function that calculates sample variance two ways.
 
 - By default, the function will calculate the unbiased estimate of $\sigma^2$, which we will call $s^2$.
@@ -1639,6 +1729,8 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 \[
 \hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2
 \]
+
+---
 
 
 ```r
@@ -1654,13 +1746,15 @@ get_var = function(x, unbiased = TRUE) {
 }
 ```
 
+---
+
 
 ```r
 get_var(test_sample)
 ```
 
 ```
-## [1] 26.70743
+## [1] 6.815147
 ```
 
 ```r
@@ -1668,7 +1762,7 @@ get_var(test_sample, unbiased = TRUE)
 ```
 
 ```
-## [1] 26.70743
+## [1] 6.815147
 ```
 
 ```r
@@ -1676,8 +1770,10 @@ var(test_sample)
 ```
 
 ```
-## [1] 26.70743
+## [1] 6.815147
 ```
+
+---
 
 - We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
 
@@ -1687,5 +1783,5 @@ get_var(test_sample, unbiased = FALSE)
 ```
 
 ```
-## [1] 24.03669
+## [1] 6.133632
 ```

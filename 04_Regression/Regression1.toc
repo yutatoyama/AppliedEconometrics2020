@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{Framework}{2}{0}{1}
+\beamer@sectionintoc {2}{Specification}{7}{0}{2}
+\beamer@sectionintoc {3}{Fit}{13}{0}{3}
+\beamer@sectionintoc {4}{Inference}{16}{0}{4}
+\beamer@sectionintoc {5}{Testing}{21}{0}{5}

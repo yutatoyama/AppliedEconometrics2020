@@ -1,21 +1,31 @@
 ---
-title: "Panal Data 1"
-author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+title: "Panal Data 1: Framework"
+author: 'Instructor: Yuta Toyama'
+date: "Last updated: `r Sys.Date()`"
+fig_width: 6 
+fig_height: 4 
 output: 
+  
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
 ---
 
-# Panel Data
+# Introduction
 
 ## Contents
 
@@ -51,6 +61,9 @@ $$
 \epsilon_{it} = \alpha_i + u_{it}
 $$
 where $\alpha_i$ is called **unit fixed effect**, which is the time-invariant unobserved heterogeneity. 
+
+--- 
+
 - With panel data, we can control for the unit fixed effects by incorporating the dummy variable for each unit $i$!
 $$
 y_{it} = \beta' x_{it} + \gamma_2 D2_i + \cdots + \gamma_n Dn_i + u_{it}
@@ -73,6 +86,9 @@ $$
     3. No outliers
     4. No Perfect multicollinarity
 - Let's discuss Assumptions 1, 2, and 4 in detail. 
+
+--- 
+
 - Assumption 1 is weaker than the assumption in OLS, because the time-invariant factor $\alpha_i$ is captured by the fixed effect.
     - Example: Unobserved ability is caputured by $\alpha_i$.
 - Assumption 2 allows for serial correlation (i.e., $Cov(x_{it},x_{it'} ) \neq 0$ ) within individual $i$.
@@ -83,8 +99,8 @@ $$
 wage_{it} = \beta_0 + \beta_1 experience_{it} + \beta_2 male_{i} + \beta_3 white_{i} + \alpha_i + u_{it}
 $$
 where $experience_{it}$ measures how many years worker $i$ has worked before at time $t$.
-- In the regression above, we have multicollinearity issue because of $male_{i}$ and $white_{i}$.
-- Intuitively, we cannot estimate the coefficient $\beta_2$ and $\beta_3$ because those **time-invariant** variables are completely captured by the unit fixed effect $\alpha_i$. 
+    - In the regression above, we have multicollinearity issue because of $male_{i}$ and $white_{i}$.
+    - Intuitively, we cannot estimate the coefficient $\beta_2$ and $\beta_3$ because those **time-invariant** variables are completely captured by the unit fixed effect $\alpha_i$. 
 
 ## Estimation (within transformation)
 
@@ -102,7 +118,7 @@ $$
 $$
 Then apply the OLS estimator to the above equation!.
 
-### Importance of within variation
+## Importance of within variation
 
 - As I talked before, the variation of the explanatory variable is key for precisely estimating the coefficients (once we control for the endogeneity).
 - Within transformation eliminates the time-invariant unobserved factor, which is a large source of endogeneity in many situations. 
@@ -125,7 +141,7 @@ $$
 
 ## Panel + IV
 
-- You can use IV regression with panel data. This is PS5.
+- You can use IV regression with panel data.
 
 ## Standard Errors
 

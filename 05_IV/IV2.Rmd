@@ -1,21 +1,39 @@
 ---
-title: "Instrumental Variable Estimation 2"
+title: "Instrumental Variable Estimation 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: `r Sys.Date()`"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-# Instrumental Variable 2: Implementation in R
+# Introduction
+
+## Introduction
+
+- I cover three examples of instrumental variable regressions.
+    1. Wage regression
+    2. Demand curve
+    3. Effects of Voter Turnout
+
+# Wage regression
 
 ## Example 1: Wage regression
 
@@ -34,11 +52,15 @@ data <- read.dta("MROZ.DTA")
 
 ```
 
+---
+
 - Describe data
 ```{r}
 library(stargazer)
 stargazer(data, type = "text")
 ```
+
+---
 
 - Consider the wage regression 
 $$
@@ -47,6 +69,8 @@ $$
 - We assume that $exper_i$ is exogenous but $educ_i$ is endogenous.
 - As an instrument for $educ_i$, we use the years of schooling for his or her father and mother, which we call $fathereduc_i$ and $mothereduc_i$. 
 - Discussion on these IVs will be later. 
+
+---
 
 ```{r}
 
@@ -75,6 +99,8 @@ stargazer(result_OLS, result_IV, type ="text", se = rob_se)
 
 ```
 
+---
+
 - How about the first stage? You should always check this!!
 
 ```{r}
@@ -90,7 +116,7 @@ linearHypothesis(result_1st,
 
 ```
 
-### Discussion on IV
+## Discussion on IV
 
 - Labor economists have used family background variables as IVs for education. 
 - Relevance: OK from the first stage regression. 
@@ -99,6 +125,8 @@ linearHypothesis(result_1st,
 - Discussion on the validity of instruments is crucial in empirical research. 
 
 
+# Demand curve
+
 ## Example 2: Estimation of the Demand for Cigaretts
 
 - Demand model is a building block in many branches of Economics. 
@@ -106,6 +134,8 @@ linearHypothesis(result_1st,
 - Smoking is a prominent example as it is related to many illnesses and negative externalities.
 - It is plausible that cigarette consumption can be reduced by taxing cigarettes more heavily. 
 - Question: how much taxes must be increased to reach a certain reduction in cigarette consumption? -> Need to know **price elasticity of demand** for cigaretts.
+
+---
 
 - Use `CigarrettesSW` in the package `AER`.
 - a panel data set that contains observations on cigarette consumption and several economic indicators for all 48 continental federal states of the U.S. from 1985 to 1995.
@@ -116,6 +146,7 @@ linearHypothesis(result_1st,
     - Panel data $y_{it}$: income of person $i$ in year $t$.
 - We will see more on panel data later in this course. For now, we use the panel data as just  cross-sectional data (**pooled cross-sections**)
 
+---
 
 
 ```{r}
@@ -124,6 +155,8 @@ library(AER)
 data("CigarettesSW")
 summary(CigarettesSW)
 ```
+
+---
 
 - Consider the following model
 $$
@@ -139,7 +172,7 @@ where
         - Exogenous(indepndent) since the sales tax does not influence demand directly, but indirectly through the price.
     - $CigTax_{it}$: the cigarett-specific taxes
       
-
+---
 
 ```{r}
 library(dplyr)
@@ -150,6 +183,8 @@ CigarettesSW %>%
   mutate( cigtax = tax/cpi ) -> Cigdata
 
 ```
+
+---
 
 - Let's run the regressions
 
@@ -174,6 +209,7 @@ stargazer(cig_ols, cig_ivreg, type ="text", se = rob_se)
 
 
 
+---
 
 - The first stage regression
 
@@ -192,12 +228,16 @@ linearHypothesis(result_1st,
 ```
 
 
+# Voting
+
 ## Example 3: Effects of Turnout on Partisan Voting
 
 - THOMAS G. HANSFORD and BRAD T. GOMEZ "Estimating the Electoral Effects of Voter Turnout" The American Political Science Review Vol. 104, No. 2 (May 2010), pp. 268-288
     - Link: https://www.cambridge.org/core/journals/american-political-science-review/article/estimating-the-electoral-effects-of-voter-turnout/8A880C28E79BE770A5CA1A9BB6CF933C
 - Here, we will see a simplified version of their analysis. 
 - The dataset is [here](HansfordGomez_Data.csv)
+
+---
 
 ```{r}
 library(readr)
@@ -207,6 +247,8 @@ HGdata <- read_csv("HansfordGomez_Data.csv")
 stargazer::stargazer(as.data.frame(HGdata), type="text")
 
 ```
+
+---
 
 - Data description: 
 
@@ -254,6 +296,8 @@ stargazer::stargazer(as.data.frame(HGdata), type="text")
 | State_DVS_lag | State-wide Dem vote share, lagged one election|
 | State_DVS_lag2 | State_DVS_lag squared|
 
+---
+
  - Consider the following regression 
  $$
 DemoShare_{it} = \beta_0 + \beta_1 Turnout_{it} + u_t + u_{it}
@@ -264,6 +308,8 @@ where
     - $u_t$: **Year fixed effects**. Time dummies for each presidential election year
 - As an IV, we use the rainfall measure denoted by `DNormPrcp_KRIG`
 
+
+---
 
 ```{r}
   
@@ -298,5 +344,3 @@ linearHypothesis(hg_1st,
                  vcov = vcovHC, type = "HC1")
 
 ```
-
-- We will see this paper more in excercise 4 (due on July 9th).

@@ -1,24 +1,32 @@
 ---
 title: 'Program Evaluation (Causal Inference) 2: Regression Discontinuity Design'
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: `r Sys.Date()`"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-Introduction
-============
+# Introduction
 
-Introduction
+## Introduction
 
 -   Regression Discontinuity Design
 
@@ -41,19 +49,18 @@ Introduction
 
     -   What we estimate is the effect on people at the boundary.
 
-Idea in Figure
+## Idea in Figure
 
-Reference
+## Reference
 
 -   Angrist and Pischke "Mostly harmless econometrics" Chapter 6
 
 -   R packages:
     [https://sites.google.com/site/rdpackages/rdrobust ](https://sites.google.com/site/rdpackages/rdrobust )
 
-Framework
-=========
+# Framework
 
-Framework
+## Framework
 
 -   $Y_{i}$: observed outcome for person $i$
 
@@ -71,7 +78,7 @@ Framework
 
     -   Probabilistic assignment is allowed (fuzzy RD design)
 
-Example: Incumbent Advantage
+## Example: Incumbent Advantage
 
 -   Consider the two-candidate elections
 
@@ -94,7 +101,7 @@ Example: Incumbent Advantage
     -   If you focus on these people, $D_{i}$ is as if it were randomly
         assigned.
 
-Framework cont.d
+## Framework cont.d
 
 -   Note that $D_{i}=\mathbf{1}\{W_{i}\geq\bar{W}\}$ implies the
     unconfoundedness $$(Y_{1i},Y_{0i})\perp D_{i}|W_{i}$$
@@ -108,7 +115,7 @@ Framework cont.d
 -   To compare people with and without treatment, we need to rely on
     some sort of extrapolation around the threshold.
 
-Linear approach
+## Linear approach
 
 -   Suppose for a moment that $$\begin{aligned}
     Y_{1i} & =\rho+Y_{0i}\\
@@ -123,9 +130,13 @@ Linear approach
 
     -   What if $E[Y_{0i}|W_{i}=w]$ is nonlinear?
 
+---
+
 ![image](figure_table/Figure6_1_1.png)
 
-A more general approach
+---
+
+## A more general approach
 
 -   Allowing for nonlinear effect of the running variable $W_{i}$
     $$Y_{i}=f(W_{i})+\rho\mathbf{1}\{W_{i}\geq\bar{W}\}+\eta_{i}$$
@@ -135,7 +146,7 @@ A more general approach
 
     -   nonparametric approach later.
 
-Implementation in Regression
+## Implementation in Regression
 
 -   Consider $$\begin{aligned}
     E[Y_{0i}|W_{i}=w] & =f_{0}(W_{i}-\bar{W})\\
@@ -156,23 +167,28 @@ Implementation in Regression
     -   How close the sample should be to the threshold can be taken
         care by statistical procedure.
 
-Example
-=======
+# Example
 
-From Mastering Metrics Sec 4.1: Effects of the minimum age drinking law
+## From Mastering Metrics Sec 4.1: Effects of the minimum age drinking law
 
 ![image](figure_table/MMfig41.pdf)
 
+---
+
 ![image](figure_table/MMfig42.pdf)
+
+---
 
 ![image](figure_table/MMfig44.pdf)
 
+---
+
 ![image](figure_table/MMfig45.pdf)
 
-Formal Analysis
-===============
 
-Formal Identification Analysis
+# Formal Analysis
+
+## Formal Identification Analysis
 
 -   Key: continuity assumptions: Both $E[Y_{1i}|W_{i}=w]$ and
     $E[Y_{0i}|W_{i}=w]$ are continuous at the threshold $w=\bar{W}$.
@@ -193,9 +209,8 @@ Formal Identification Analysis
 
     -   Notice that we use continuity in the second equalities!
 
-```{=html}
-<!-- -->
-```
+---
+
 -   Remember that $$\begin{aligned}
     \lim_{w\uparrow\bar{W}}E[Y_{i}|W_{i} & =w]=\lim_{w\uparrow\bar{W}}E[Y_{0i}|W_{i}=w]=E[Y_{0i}|W_{i}=\bar{W}]\\
     \lim_{w\downarrow\bar{W}}E[Y_{i}|W_{i} & =w]=\lim_{w\downarrow\bar{W}}E[Y_{1i}|W_{i}=w]=E[Y_{1i}|W_{i}=\bar{W}]\end{aligned}$$
@@ -209,16 +224,15 @@ Formal Identification Analysis
 
         -   Conditional expectation near the threshold.
 
-Nonparametric Implementation
+## Nonparametric Implementation
 
 -   Too much details for this course. I will skip.
 
 -   The package 'rddrobust" will take care for all the details.
 
-Validation of Assumptions
-=========================
+# Validation of Assumptions
 
-Validation of Assumptions
+## Validation of Assumptions
 
 -   The key assumptions : Both $E[Y_{1i}|W_{i}=w]$ and
     $E[Y_{0i}|W_{i}=w]$ are continuous at the threshold $w=\bar{W}$.
@@ -232,7 +246,7 @@ Validation of Assumptions
 
     2.  Density test (no bunching in the running variable).
 
-Covariate Test
+## Covariate Test
 
 -   The underlying idea of RDD: Comparing outcomes right above and right
     below $\bar{W}$ provides a comparison of treated and control agents
@@ -258,7 +272,7 @@ Covariate Test
 
     -   $W$: age, $X$: social security benefit (non-work income)
 
-Density Test, or No Bunching
+## Density Test, or No Bunching
 
 -   There is also a concern about manipulation if agents know about the
     institutional details
@@ -283,11 +297,11 @@ Density Test, or No Bunching
 -   Note: Bunching itself is an interesting economic phenomenon. It can
     be used to analyze a different question.
 
-Ito and Sallee (2018, REStat)
+## Ito and Sallee (2018, REStat)
 
 ![image](figure_table/ItoSallee.png)
 
-Bunching Estimator
+## Bunching Estimator
 
 ![image](figure_table/ItoSallee2.png)
 

@@ -1,30 +1,35 @@
 ---
-title: "Regression 2"
+title: "Regression 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: 2020-03-30"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-# Linear Regression 2: Implementation in R
+# Introduction
 
-# Acknowledgement
+## Acknowledgement
 This note is based on  "Introduction to Econometrics with R". https://www.econometrics-with-r.org/index.html
 
-
-## Implementation in R 
-
-
-### Preliminary: packages
+## Preliminary: packages
 
 - We use the following packages:
     - `AER` : 
@@ -126,7 +131,7 @@ library("stargazer")
 library("lmtest")
 ```
 
-### Empirical setting: Data from California School
+## Empirical setting: Data from California School
 
 - Question: How does the student-teacher ratio affects test scores?
 - We use data from California school, which is included in `AER` package. 
@@ -137,6 +142,8 @@ library("lmtest")
 # load the the data set in the workspace
 data(CASchools)
 ```
+
+---
 
 - Use `class()` function to see `CASchools` is `data.frame` object.
 
@@ -152,7 +159,7 @@ class(CASchools)
     - Step 1: Look at data (descriptive analysis) 
     - Step 2: Run regression
     
-### Step 1: Descriptive analysis
+## Step 1: Descriptive analysis
 
 - It is always important to grasp your data before running regression. 
 - `head()` function give you a first overview of the data.
@@ -162,26 +169,15 @@ class(CASchools)
 head(CASchools)
 ```
 
-```
-##   district                          school  county grades students teachers
-## 1    75119              Sunol Glen Unified Alameda  KK-08      195    10.90
-## 2    61499            Manzanita Elementary   Butte  KK-08      240    11.15
-## 3    61549     Thermalito Union Elementary   Butte  KK-08     1550    82.90
-## 4    61457 Golden Feather Union Elementary   Butte  KK-08      243    14.00
-## 5    61523        Palermo Union Elementary   Butte  KK-08     1335    71.50
-## 6    62042         Burrel Union Elementary  Fresno  KK-08      137     6.40
-##   calworks   lunch computer expenditure    income   english  read  math
-## 1   0.5102  2.0408       67    6384.911 22.690001  0.000000 691.6 690.0
-## 2  15.4167 47.9167      101    5099.381  9.824000  4.583333 660.5 661.9
-## 3  55.0323 76.3226      169    5501.955  8.978000 30.000002 636.3 650.9
-## 4  36.4754 77.0492       85    7101.831  8.978000  0.000000 651.9 643.5
-## 5  33.1086 78.4270      171    5235.988  9.080333 13.857677 641.8 639.9
-## 6  12.3188 86.9565       25    5580.147 10.415000 12.408759 605.7 605.4
-```
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["district"],"name":[1],"type":["chr"],"align":["left"]},{"label":["school"],"name":[2],"type":["chr"],"align":["left"]},{"label":["county"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["grades"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["students"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["teachers"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["calworks"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["lunch"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["computer"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["expenditure"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["income"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["english"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["read"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["math"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"75119","2":"Sunol Glen Unified","3":"Alameda","4":"KK-08","5":"195","6":"10.90","7":"0.5102","8":"2.0408","9":"67","10":"6384.911","11":"22.690001","12":"0.000000","13":"691.6","14":"690.0","_rn_":"1"},{"1":"61499","2":"Manzanita Elementary","3":"Butte","4":"KK-08","5":"240","6":"11.15","7":"15.4167","8":"47.9167","9":"101","10":"5099.381","11":"9.824000","12":"4.583333","13":"660.5","14":"661.9","_rn_":"2"},{"1":"61549","2":"Thermalito Union Elementary","3":"Butte","4":"KK-08","5":"1550","6":"82.90","7":"55.0323","8":"76.3226","9":"169","10":"5501.955","11":"8.978000","12":"30.000002","13":"636.3","14":"650.9","_rn_":"3"},{"1":"61457","2":"Golden Feather Union Elementary","3":"Butte","4":"KK-08","5":"243","6":"14.00","7":"36.4754","8":"77.0492","9":"85","10":"7101.831","11":"8.978000","12":"0.000000","13":"651.9","14":"643.5","_rn_":"4"},{"1":"61523","2":"Palermo Union Elementary","3":"Butte","4":"KK-08","5":"1335","6":"71.50","7":"33.1086","8":"78.4270","9":"171","10":"5235.988","11":"9.080333","12":"13.857677","13":"641.8","14":"639.9","_rn_":"5"},{"1":"62042","2":"Burrel Union Elementary","3":"Fresno","4":"KK-08","5":"137","6":"6.40","7":"12.3188","8":"86.9565","9":"25","10":"5580.147","11":"10.415000","12":"12.408759","13":"605.7","14":"605.4","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 - Alternatively, you can use `browse()` to see the entire dataset in browser window.
 
-#### Create variables
+## Create variables
 
 - Create several variables that are needed for the analysis.
 - We use `dplyr` for this purpose.
@@ -194,7 +190,7 @@ CASchools %>%
 ```
 
 
-#### Descriptive statistics
+## Descriptive statistics
 
 - There are several ways to show descriptive statistics
 - The standard one is to use `summary()` function
@@ -285,14 +281,11 @@ DistributionSummary <- data.frame(Average = c(avg_STR, avg_score),
 DistributionSummary
 ```
 
-```
-##               Average StandardDeviation quantile.10. quantile.25. quantile.40.
-## quant_STR    19.64043          1.891812      17.3486     18.58236     19.26618
-## quant_score 654.15655         19.053347     630.3950    640.05000    649.06999
-##             quantile.50. quantile.60. quantile.75. quantile.90.
-## quant_STR       19.72321      20.0783     20.87181     21.86741
-## quant_score    654.45000     659.4000    666.66249    678.85999
-```
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Average"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["StandardDeviation"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["quantile.10."],"name":[3],"type":["dbl"],"align":["right"]},{"label":["quantile.25."],"name":[4],"type":["dbl"],"align":["right"]},{"label":["quantile.40."],"name":[5],"type":["dbl"],"align":["right"]},{"label":["quantile.50."],"name":[6],"type":["dbl"],"align":["right"]},{"label":["quantile.60."],"name":[7],"type":["dbl"],"align":["right"]},{"label":["quantile.75."],"name":[8],"type":["dbl"],"align":["right"]},{"label":["quantile.90."],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"19.64043","2":"1.891812","3":"17.3486","4":"18.58236","5":"19.26618","6":"19.72321","7":"20.0783","8":"20.87181","9":"21.86741","_rn_":"quant_STR"},{"1":"654.15655","2":"19.053347","3":"630.3950","4":"640.05000","5":"649.06999","6":"654.45000","7":"659.4000","8":"666.66249","9":"678.85999","_rn_":"quant_score"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 - My personal favorite is to use `stargazer` function.
 
@@ -353,7 +346,7 @@ CASchools %>%
 - We will use `stargazer` to report regression results.
 
 
-#### Scatter plot
+## Scatter plot
 
 - Let's see how test score and student-teacher-ratio is correlated. 
 
@@ -378,9 +371,9 @@ cor(CASchools$STR, CASchools$score)
 ## [1] -0.2263627
 ```
 
-### Step 2: Run regression
+## Step 2: Run regression
 
-#### Simple linear regression
+## Simple linear regression
 
 - We use `lm()` function to run linear regression
 - First, consider the simple linear regression 
@@ -433,7 +426,7 @@ summary(model1_summary)
     
 - You can add more variable in the regression (will see this soon)
 
-#### Correction of Robust standard error
+## Correction of Robust standard error
 
 - We use `vcovHC()` function, a partof the package `sandwich`, to obtain the robust standard errors.
     - The package `sandwich` is automatically loaded if you load `AER` package.
@@ -476,7 +469,7 @@ coeftest(model1_summary, vcov. = vcov)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-#### Report by Stargazer
+## Report by Stargazer
 
 - `stargazer` is useful to show the regression result. 
 
@@ -550,7 +543,7 @@ stargazer( model1_summary,
 ```
 
 
-#### Full results
+## Full results
 
 Taken from https://www.econometrics-with-r.org/7-6-analysis-of-the-test-score-data-set.html
 

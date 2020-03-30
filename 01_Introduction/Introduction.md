@@ -1,24 +1,27 @@
 ---
 title: "Introduction"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: 2020-03-30"
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
     toc_depth: 2
     toc_float: true
     keep_md: true
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
 ---
 
 # Introduction to the course
 
-
-## What is econometrics?
+## What do we do with econometrics?
 
 1. Estimating economic relationships
     1. Demand curve $\log(Q_{t})= \alpha_0 + \alpha_1 P_t + \epsilon_t$
@@ -28,16 +31,42 @@ output:
     - Are consumers rational?
 3. Determine the effect of a given intervention (causal inference)
     - What is the effect of increasing minimum wage on employment?
-    - Do mergers increase the output price?
-    - Does democracy cause economic growth? (a series of works by Acemoglu, Robinsohn, and their co-authors).
+    [](- Do mergers increase the output price?)
+    - Does democracy cause economic growth? 
     - Effects of going to private colleges on your future earnings.
     - Note: Some questions may have underlying economic models, others may not. 
 4. Describe the data (prediction/forecasting)
     - How does the distribution of wage look like? 
-    - Relationship between electricity consumption and temperature (possibly nonlinear).
+    - Relationship .b.w electricity consumption and temperature (possibly nonlinear).
     - Related to machine learning (ML). 
 
 ---
+
+## Goal of the Course
+
+1. Understand program evaluation and/or causal inference approach in econometrics
+    - Widely used in applied microeconomics (labor, health, development, IO)
+2. read empirical papers that uses these methods 
+2. Learn how to conduct empirical analysis using R.
+
+---
+
+## Relation to other courses
+
+- This course does **NOT** cover:
+    1. Discrete choice models
+    2. Machine learning methods
+    3. Structural estimation
+- I recommend the following courses to learn these topics
+    - Econometrics II or Applied Econometrics by Prof. Hoshino (for topic 1 and 2)
+    - Economic Study (Microeconometrics) by Me (for topic 1 and 3)
+    - Advanced Econometrics by Prof. Ueda and Prod. Dendup (for topic 1)
+- I also highly recommend a special course on causal inference by Prof. Yamamoto
+    - more rigorous treatment of the topic.
+    - intenstive course at the end of August (to be announced)
+
+---
+
 
 ## Why do we need to learn computation 
 
@@ -73,7 +102,15 @@ output:
     
 - Note: Python seems also good, though I have not used it before.
 
----
+## Course Plan
+
+1. Introduction to R programming (2-3 weeks)
+2. Review of Statistics (1 week)
+3. Linear Regression (3 weeks)
+4. Instrumental Variable Regression (2 weeks)
+5. Panel Data (2 weeks)
+6. Program Evaluation, or Causal Inference Methods (4 weeks)
+
 
 # Introduction of `R` and `R studio`
 
@@ -117,23 +154,25 @@ output:
 
 To get started, we'll use `R` like a simple calculator.
 
-#### Addition, Subtraction, Multiplication and Division {-}
+**Addition, Subtraction, Multiplication and Division**
 
 | Math          | `R`     | Result    |
 |---------------|---------|-----------|
-| $3 + 2$       | `3 + 2` | `r 3 + 2` |
-| $3 - 2$       | `3 - 2` | `r 3 - 2` |
-| $3 \cdot2$    | `3 * 2` | `r 3 * 2` |
-| $3 / 2$       | `3 / 2` | `r 3 / 2` |
+| $3 + 2$       | `3 + 2` | 5 |
+| $3 - 2$       | `3 - 2` | 1 |
+| $3 \cdot2$    | `3 * 2` | 6 |
+| $3 / 2$       | `3 / 2` | 1.5 |
 
 ---
 
-## Basic Calculations
 
-To get started, we'll use `R` like a simple calculator.
 
-```{r}
+```r
 1 + 3
+```
+
+```
+## [1] 4
 ```
 
 
@@ -141,44 +180,46 @@ To get started, we'll use `R` like a simple calculator.
 ---
 
 
-#### Exponents  {-}
+**Exponents**  
 
 | Math         | `R`             | Result            |
 |--------------|-----------------|-------------------|
-| $3^2$        | `3 ^ 2`         | `r 3 ^ 2`         |
-| $2^{(-3)}$   | `2 ^ (-3)`      | `r 2 ^ (-3)`      |
-| $100^{1/2}$  | `100 ^ (1 / 2)` | `r 100 ^ (1 / 2)` |
-| $\sqrt{100}$ | `sqrt(100)`     | `r sqrt(100)`     |
+| $3^2$        | `3 ^ 2`         | 9         |
+| $2^{(-3)}$   | `2 ^ (-3)`      | 0.125      |
+| $100^{1/2}$  | `100 ^ (1 / 2)` | 10 |
+| $\sqrt{100}$ | `sqrt(100)`     | 10     |
 
 ---
 
-#### Mathematical Constants  {-}
+**Mathematical Constants**
 
 | Math         | `R`             | Result            |
 |--------------|-----------------|-------------------|
-| $\pi$        | `pi`            | `r pi`            |
-| $e$          | `exp(1)`        | `r exp(1)`        |
+| $\pi$        | `pi`            | 3.1415927            |
+| $e$          | `exp(1)`        | 2.7182818        |
 
 ---
 
-#### Logarithms  {-}
+**Logarithms**
 
 - Note that we will use $\ln$ and $\log$ interchangeably to mean the natural logarithm. 
 - There is no `ln()` in `R`, instead it uses `log()` to mean the natural logarithm.
 
 | Math              | `R`                 | Result                |
 |-------------------|---------------------|-----------------------|
-| $\log(e)$         | `log(exp(1))`       | `r log(exp(1))`       |
-| $\log_{10}(1000)$ | `log10(1000)`       | `r log10(1000)`       |
-| $\log_{2}(8)$     | `log2(8)`           | `r log2(8)`           |
-| $\log_{4}(16)$    | `log(16, base = 4)` | `r log(16, base = 4)` |
+| $\log(e)$         | `log(exp(1))`       | 1       |
+| $\log_{10}(1000)$ | `log10(1000)`       | 3       |
+| $\log_{2}(8)$     | `log2(8)`           | 3           |
+| $\log_{4}(16)$    | `log(16, base = 4)` | 2 |
 
-#### Trigonometry  {-}
+---
+
+**Trigonometry**
 
 | Math            | `R`           | Result          |
 |-----------------|---------------|-----------------|
-| $\sin(\pi / 2)$ | `sin(pi / 2)` | `r sin(pi / 2)` |
-| $\cos(0)$       | `cos(0)`      | `r cos(0)`      |
+| $\sin(\pi / 2)$ | `sin(pi / 2)` | 1 |
+| $\cos(0)$       | `cos(0)`      | 1      |
 
 ---
 
@@ -187,7 +228,8 @@ To get started, we'll use `R` like a simple calculator.
 - In using `R` as a calculator, we have seen a number of functions: `sqrt()`, `exp()`, `log()` and `sin()`. 
 - To get documentation about a function in `R`, simply put a question mark in front of the function name and RStudio will display the documentation, for example: 
 
-```{r, eval = FALSE}
+
+```r
 ?log
 ?sin
 ?paste
@@ -200,19 +242,24 @@ To get started, we'll use `R` like a simple calculator.
 ## Installing Packages
 
 - One of the main strengths of `R` as an open-source project is its package system. 
+
 - To install a package, use the `install.packages()` function. 
     - Think of this as buying a recipe book from the store, bringing it home, and putting it on your shelf.
 
-```{r, eval = FALSE}
+
+```r
 install.packages("ggplot2")
 ```
 
 - Once a package is installed, it must be loaded into your current `R` session before being used. 
     - Think of this as taking the book off of the shelf and opening it up to read.
 
-```{r, message = FALSE, warning = FALSE}
+
+```r
 library(ggplot2)
 ```
+
+---
 
 - Once you close `R`, all the packages are closed and put back on the imaginary shelf. 
 - The next time you open `R`, you do not have to install the package again, but you do have to load any packages you intend to use by invoking `library()`.

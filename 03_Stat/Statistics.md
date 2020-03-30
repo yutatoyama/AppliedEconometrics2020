@@ -1,23 +1,38 @@
 ---
 title: "Review of Statistics"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: 2020-03-30"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
+
+
 
 # A Review of Statistics 
 
+## Acknowledgement
+
 **Acknowledgement:** This chapter is largely based on  chapter 3 of "Introduction to Econometrics with R". https://www.econometrics-with-r.org/index.html
+
+
+## Introduction
 
 The goal of this chapter is 
 
@@ -42,7 +57,7 @@ The goal of this chapter is
 - Idea 2: Pick the first observation of the sample. 
 - Question: How can we say which is better?
 
-### Properties of the estimator
+## Properties of the estimator
 
 Consider the estimator $\hat{\mu}_N$ for the unknown parameter $\mu$. 
 
@@ -59,7 +74,7 @@ Consider the estimator $\hat{\mu}_N$ for the unknown parameter $\mu$.
     - Note: a bit different from the usual convergence of the sequence. 
     
 
-### Sample mean $\bar{Y}$ is unbiased and consistent
+## Sample mean $\bar{Y}$ is unbiased and consistent
 
 - Showing these two properties using mathmaetics is straightforward:
     - Unbiasedness: Take expectation.
@@ -69,6 +84,8 @@ Consider the estimator $\hat{\mu}_N$ for the unknown parameter $\mu$.
 - Step 1: Prepare a population. Here, I prepare income and age data from PUMS 5% sample of U.S. Census 2000.
     - PUMS: Public Use Microdata Sample 
     - [Download the example data here as a .csv file.](data_pums_2000.csv) Put this file in the same folder as your R script file. 
+    
+---
 
 
 ```r
@@ -90,6 +107,8 @@ pums2000 <- read_csv("data_pums_2000.csv")
 ```r
 pop <- as.vector(pums2000$INCTOT)
 ```
+
+---
 
 - *Population* mean and standard deviation 
 
@@ -114,23 +133,29 @@ pop_sd
 ## [1] 38306.17
 ```
 
-```r
-# income distribution in population
-# Note that the unit is in USD.
-library("ggplot2")
-```
+---
 
-```
-## Warning: package 'ggplot2' was built under R version 3.6.3
-```
+- income distribution in population (Unit in USD)
+
+
+
 
 ```r
-qplot(pop, geom = "density", 
+fig <- ggplot2::qplot(pop, geom = "density", 
       xlab = "Income",
       ylab = "Density")
 ```
 
-![](Statistics_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+---
+
+
+```r
+plot(fig)
+```
+
+<img src="Statistics_files/figure-html/unnamed-chunk-6-1.png" width="80%" />
+
+--- 
 
 - The distribution has a long tail.
 - Let's plot the distribution in *log* scale
@@ -138,14 +163,23 @@ qplot(pop, geom = "density",
 
 ```r
 # `log` option specifies which axis is represented in log scale.
-qplot(pop, geom = "density", 
+fig2 <- qplot(pop, geom = "density", 
       xlab = "Income",
       ylab = "Density",
       log = "x")
 ```
 
-![](Statistics_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
+---
+
+
+```r
+plot(fig2)
+```
+
+<img src="Statistics_files/figure-html/unnamed-chunk-8-1.png" width="0.8" />
+
+---
 
 - Let's investigate how close the sample mean constucted from the random sample is to the true population mean. 
 - Step 1: Draw random sample*s* from this population and calculate $\bar{Y}$ for each sample.
@@ -160,7 +194,12 @@ set.seed(123)
 
 # draw random sample of 100 observations from the variable pop
 test <- sample(x = pop, size = 100)
+```
 
+---
+
+
+```r
 # Use loop to repeat 2000 times. 
 Nsamples = 2000
 result1 <- numeric(Nsamples)
@@ -171,7 +210,12 @@ for (i in 1:Nsamples ){
   result1[i] <- mean(test)
   
 }
+```
 
+---
+
+
+```r
 # Simple approach
 result1 <- replicate(expr = mean(sample(x = pop, size = 10)), n = Nsamples)
 result2 <- replicate(expr = mean(sample(x = pop, size = 100)), n = Nsamples)
@@ -183,6 +227,8 @@ result_data <- data.frame(  Ybar10 = result1,
                             Ybar100 = result2, 
                             Ybar500 = result3)
 ```
+
+---
 
 - Step 3: See the distribution of those 2000 sample means. 
 
@@ -214,19 +260,23 @@ fig <-
   xlab("Sample mean") + 
   geom_line(aes(x = value, colour = variable ),   stat = "density" ) + 
   geom_vline(xintercept=pop_mean ,colour="black")
+```
 
-# Display the figure 
+---
+
+
+```r
 plot(fig)
 ```
 
-![](Statistics_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+<img src="Statistics_files/figure-html/unnamed-chunk-13-1.png" width="80%" />
 
 - Observation 1: Regardless of the sample size, the average of the sample means is close to the population mean. **Unbiasdeness**
 - Observation 2: As the sample size gets larger, the distribution is concentrated around the population mean. **Consistency (law of large numbers)**
 
-## Hypothesis Testing
+# Hypothesis Testing
 
-### Central limit theorem
+## Central limit theorem
 
 - Cental limit theorem: Consider the i.i.d. sample of $Y_1,\cdots, Y_N$ drawn from the random variable $Y$ with mean $\mu$ and variance $\sigma^2$. The following $Z$ converges in distribution to the normal distribution.
 \[
@@ -237,13 +287,16 @@ In other words,
 \lim_{N\rightarrow\infty}P\left(Z \leq z\right)=\Phi(z)
 \]
 
+--- 
+
 - The central limit theorem implies that if $N$ is large **enough**, we can **approximate** the distribution of $\bar{Y}$ by the standard normal distribution with mean $\mu$ and variance $\sigma^2 / N$ **regardless of the underlying distribution of $Y$.**  
 
 - Let's examine this property through simulation!!
 
 - Use the same example as before. Remember that the underlying income distribution is clearly NOT normal. 
-    - Population mean $\mu = 30165.4673315$ and standard deviation $\sigma = 38306.1712336$. Use these numbers. 
-    
+    - Population mean $\mu = 3.0165467\times 10^{4}$ and standard deviation $\sigma = 3.8306171\times 10^{4}$. Use these numbers. 
+
+---    
     
 
 ```r
@@ -262,9 +315,12 @@ f_simu_CLT = function(Nsamples, samplesize, pop, pop_mean, pop_sd ){
   return(output)
 
 }
+```
 
-# Comment: You can do better without using forloop. Let me know if you come with a good idea.
+--- 
 
+
+```r
 # Run simulation 
 Nsamples = 2000
 result_CLT1 <- f_simu_CLT(Nsamples, 10, pop, pop_mean, pop_sd )
@@ -283,6 +339,7 @@ result_CLT_data <- data.frame(  Ybar_standardized_10 = result_CLT1,
 # Note: If you wanna quicky plot the density, type `plot(density(result1))`. 
 ```
 
+---
 
 - Now take a look at the distribution. 
 
@@ -303,15 +360,20 @@ fig <-
   xlab("Sample mean") + 
   geom_line(aes(x = value, colour = variable ),   stat = "density" ) + 
   geom_vline(xintercept=0 ,colour="black")
+```
 
+---
+
+
+```r
 plot(fig)
 ```
 
-![](Statistics_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+<img src="Statistics_files/figure-html/unnamed-chunk-17-1.png" width="80%" />
 
 - As the sample size grows, the distribution of $Z$ converges to the standard normal distribution.
 
-### Hypothesis testing
+## Hypothesis testing
 
 To be added. 
 

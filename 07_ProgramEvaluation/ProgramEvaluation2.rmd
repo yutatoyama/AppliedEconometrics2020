@@ -1,24 +1,32 @@
 ---
 title: 'Program Evaluation (Causal Inference) 2: Difference-in-differences'
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: `r Sys.Date()`"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-Introduction
-============
+# Introduction
 
-Introduction
+## Introduction
 
 -   Difference-in-differences (DID)
 
@@ -32,9 +40,9 @@ Introduction
 
 -   DID combines those two comparisons to draw causal conclusion.
 
-DID in Figure (on screen)
+## DID in Figure (on screen)
 
-Plan of the Lecture
+## Plan of the Lecture
 
 -   Formal Framework
 
@@ -42,7 +50,7 @@ Plan of the Lecture
 
 -   Parallel Trend Assumption
 
-Reference
+## Reference
 
 -   Angrist and Pischke "Mostly Harmless Econometrics" Chapter 5
 
@@ -63,10 +71,9 @@ Reference
     -   Paper:
         https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxta3VkYW1hdHN1fGd4OjM4YzkwYmVjM2ZmMzA2YWQ
 
-Framework
-=========
+# Framework
 
-Framework
+## Framework
 
 -   Consider two periods: $t=1,2$. Treatment implemented at $t=2$.
 
@@ -87,7 +94,7 @@ Framework
 -   With this, we can write $$\begin{aligned}
     Y_{it} & =D_{it}Y_{it}(1)+(1-D_{it})Y_{it}(0)\end{aligned}$$
 
-Identification
+## Identification
 
 -   Goal: ATT at $t=2$
     $$E[Y_{i2}(1)-Y_{i2}(0)|G_{i}=1]=E[Y_{i2}(1)|G_{i}=1]-E[Y_{i2}(0)|G_{i}=1]$$
@@ -109,7 +116,7 @@ Identification
 
     -   Other (more reasonable) assumption?
 
-Parallel Trend Assumption
+## Parallel Trend Assumption
 
 -   Assumption:
     $$E[Y_{i2}(0)-Y_{i1}(0)|G_{i}=0]=E[Y_{i2}(0)-Y_{i1}(0)|G_{i}=1]$$
@@ -126,16 +133,15 @@ Parallel Trend Assumption
     ATT= & E[Y_{i2}(1)-Y_{i1}(0)|G_{i}=1]-E[Y_{i2}(0)-Y_{i1}(0)|G_{i}=0]\end{aligned}$$
     which is why this is called "difference-in-differences".
 
-Estimation
-==========
+# Estimation
 
-Estimation Approach
+## Estimation Approach
 
 1.  Plug-in estimator
 
 2.  Regression estimators
 
-Plug-in Estimator
+## Plug-in Estimator
 
 -   Remember that the ATT is $$\begin{aligned}
     ATT= & E[Y_{i2}(1)-Y_{i1}(0)|G_{i}=1]-E[Y_{i2}(0)-Y_{i1}(0)|G_{i}=0]\end{aligned}$$
@@ -148,11 +154,11 @@ Plug-in Estimator
 
 -   Easy to make a $2\times2$ table!
 
-Example: Card and Kruger (1994)
+## Example: Card and Kruger (1994)
 
 ![image](figure_table/CardKruger1994Table3.pdf)
 
-Regression Estimators
+## Regression Estimators
 
 -   Run the following regression
     $$y_{it}=\alpha_{0}+\alpha_{1}G_{i}+\alpha_{2}T_{t}+\alpha_{3}D_{it}+\beta X_{it}+\epsilon_{it}$$
@@ -166,7 +172,7 @@ Regression Estimators
 -   Regression framework can incorporate covariates $X_{it}$, which is
     important to control for observed confounding factors.
 
-Regression Estimators with FEs
+## Regression Estimators with FEs
 
 -   With panel data
     $$y_{it}=\alpha D_{it}+\beta X_{it}+\epsilon_{i}+\epsilon_{t}+\epsilon_{it}$$
@@ -177,10 +183,9 @@ Regression Estimators with FEs
     -   See Bertrand, Duflo, and Mullainathan (2004, QJE) for the
         standard error issues.
 
-Parallel Trend
-==============
+# Parallel Trend
 
-Discussions on Parallel Trend
+## Discussions on Parallel Trend
 
 -   Parallel trend assumption can be violated in various situations.
 
@@ -194,7 +199,7 @@ Discussions on Parallel Trend
 -   Targeting: policies may be targeted at units that are currently
     performing best (or worst).
 
-Diagnostics for Parallel Trends: Pre-treatment trends
+## Diagnostics for Parallel Trends: Pre-treatment trends
 
 -   Check if the trends are parallel in the pre-treatment periods
 
@@ -210,7 +215,7 @@ Diagnostics for Parallel Trends: Pre-treatment trends
     -   You should never say "the key assumption for DID is satisfied if
         the pre-treatment trends are parallel.
 
-Example (Fig 5.2 from Mastering Metrics)
+## Example (Fig 5.2 from Mastering Metrics)
 
 ![image](figure_table/MMfig52.pdf)
 
@@ -231,7 +236,7 @@ Unit-Specific Time Trends
     -   But, these are assumed to be linear. We are not sure whether the
         trend is linear or not! So this is just a robustness check.
 
-Other Diagnostics: Placebo test
+## Other Diagnostics: Placebo test
 
 -   Placebo test using other period as treatment period.
     $$y_{it}=\sum_{\tau}\gamma_{\tau}G_{i}\times I_{t,\tau}+\mu_{i}+\nu_{t}+\epsilon_{it}$$
@@ -242,10 +247,9 @@ Other Diagnostics: Placebo test
 -   Placebo test using different dependent variable which should not be
     affected by the policy.
 
-Research Strategy
-=================
+# Research Strategy
 
-Research Strategy using DID
+## Research Strategy using DID
 
 -   Going back to Ishise et al (2019)
 

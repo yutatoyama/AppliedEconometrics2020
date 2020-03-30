@@ -1,27 +1,35 @@
 ---
 title: "R Basics 2 -Data-"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: `r Sys.Date()`"
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
 
-# Acknowledgement
-
- This note is largely based on Applied Statistics with `R`. https://daviddalpiaz.github.io/appliedstats/
 
 
 # Data frame
+
+## Acknowledgement
+
+ This note is largely based on Applied Statistics with `R`. https://daviddalpiaz.github.io/appliedstats/
 
 
 ## Introduction 
@@ -38,9 +46,13 @@ example_data = data.frame(x = c(1, 3, 5, 7, 9, 1, 3, 5, 7, 9),
     - Each vector must contain the same data type
     - The difference vectors can store different data types.
 
+---
+
 ```{r}
 example_data
 ```
+
+---
 
 - `write.csv` save (or export) the dataframe in `.csv` format.
 
@@ -64,7 +76,6 @@ nrow(example_data)
 ncol(example_data)
 dim(example_data)
 ```
-
 < --> 
 
 ## Load csv file
@@ -80,6 +91,9 @@ dim(example_data)
 #example_data_from_csv = read_csv("example-data.csv")
 example_data_from_csv = read.csv("example-data.csv")
 ```
+
+
+---
 
 - Note: This particular line of code assumes that the file `example_data.csv` exists in your current working directory.
 - The current working directory is the folder that you are working with. To see this, you type 
@@ -124,6 +138,8 @@ In recent versions of RStudio, `read_csv()` is used by default, thus reading in 
 library(ggplot2)
 ```
 
+---
+
 - Three things we would generally like to do with data:
     - Look at the raw data.
     - Understand the data. (Where did it come from? What are the variables? Etc.)
@@ -139,6 +155,8 @@ The function `head()` will display the first `n` observations of the data frame.
 mpg
 ```
 < -->
+
+--- 
 
 - The function `str()` will display the "structure" of the data frame.
     - It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable. 
@@ -159,6 +177,8 @@ To understand more about the data set, we use the `?` operator to pull up the do
 ```
 < -->
 
+---
+
 -  `names()` function to obtain names of the variables in the dataset
 ```{r}
 names(mpg)
@@ -169,6 +189,8 @@ names(mpg)
 mpg$year
 mpg$hwy
 ```
+
+---
 
 - We can use the `dim()`, `nrow()` and `ncol()` functions to obtain information about the dimension of the data frame.
 
@@ -186,11 +208,15 @@ ncol(mpg)
 mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
 ```
 
+---
+
 - An alternative would be to use the `subset()` function, which has a much more readable syntax.
 
 ```{r, eval = FALSE}
 subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
 ```
+
+---
 
 - Lastly, we could use the `filter` and `select` functions from the `dplyr` package which introduces the `%>%` operator from the `magrittr` package. 
 ```{r, eval = FALSE}

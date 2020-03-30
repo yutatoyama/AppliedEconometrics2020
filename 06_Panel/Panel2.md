@@ -1,21 +1,31 @@
 ---
-title: "Panel Data 2"
+title: "Panel Data 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: 2020-03-30"
+fig_width: 6 
+fig_height: 4 
 output: 
+  
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-# Panel Data 2: Implementation in R
+# Panel
 
 ## Preliminary:
 
@@ -111,6 +121,8 @@ str(Fatalities)
 ##  $ gsp         : num  -0.0221 0.0466 0.0628 0.0275 0.0321 ...
 ```
 
+--- 
+
 - As a preliminary analysis, let's plot the relationship between fatality rate and beer tax in 1998.
 
 
@@ -160,6 +172,9 @@ plot(x = data$beertax,
 ![](Panel2_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 - Positive correlation between alcohol tax and traffic accident. Possibly due to omitted variable bias. 
+
+
+--- 
 
 - Run fixed effect regression using `felm` command in `lfe` package. 
     - https://www.rdocumentation.org/packages/lfe/versions/2.8-3/topics/felm
@@ -300,6 +315,8 @@ stargazer::stargazer(result_ols, result_stateFE, result_bothFE, type = "text")
 ## Note:                                      *p<0.1; **p<0.05; ***p<0.01
 ```
 
+---
+
 - What if we do not use the cluster-robust standard error?
 
 
@@ -334,6 +351,7 @@ stargazer::stargazer(result_wo_CRS, result_w_CRS,  type = "text", se = list(summ
 ## Note:                           *p<0.1; **p<0.05; ***p<0.01
 ```
 
+# Panel + IV
 
 ## Panel Data with Instrumental Variables
 
@@ -353,6 +371,8 @@ where
     - $CigTax_{it}$: the cigarett-specific taxes
     
     
+--- 
+
 
 ```r
 # load the data set and get an overview
@@ -365,6 +385,8 @@ CigarettesSW %>%
   mutate( cigtax = tax/cpi ) -> Cigdata
 ```
     
+--- 
+
 - Run IV regression with panel data.
 
 
@@ -413,9 +435,9 @@ stargazer::stargazer(result_1, result_2, result_3, result_4, type = "text")
 ## Note:                                                   *p<0.1; **p<0.05; ***p<0.01
 ```
 
-## Some tips in `felm` command
+# `felm` command
 
-### How to report heteroskedasticity robust standard error in `stargazer`
+## How to report heteroskedasticity robust standard error in `stargazer`
 
 
 ```r
@@ -452,7 +474,7 @@ stargazer::stargazer(result_1, type = "text",
 ## Note:               *p<0.1; **p<0.05; ***p<0.01
 ```
 
-### How to conduct F test after `felm`
+## How to conduct F test after `felm`
 
 
 ```r
@@ -474,7 +496,7 @@ ftest1
 ## 49.2264183196417164367630903143 93.0000000000000000000000000000 
 ## attr(,"formula")
 ## ~rincome | rprice
-## <environment: 0x000000001f323c78>
+## <environment: 0x000000001f1260a0>
 ```
 
 ```r
@@ -496,7 +518,7 @@ ftest2
 ##  54.544853897040162848952604690567  93.000000000000000000000000000000 
 ## attr(,"formula")
 ## ~rincome - 1 | rprice
-## <environment: 0x0000000019a8dc28>
+## <environment: 0x000000001f292c80>
 ```
 
 ```r

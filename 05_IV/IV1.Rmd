@@ -1,21 +1,30 @@
 ---
-title: "Instrumental Variable Estimation 1"
+title: "Instrumental Variable Estimation 1: Framework"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: `r Sys.Date()`"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-# Instrumental Variable 1: Framework
+# Introduction
 
 ## Introduction: Endogeneity Problem and its Solution
 
@@ -27,6 +36,8 @@ output:
     2. Framework
     3. Implementation in R
     4. Examples
+    
+# Endogeneity
 
 ## Examples of Endogeneity Problem 
 
@@ -35,7 +46,7 @@ output:
     2. Measurement error
     3. Simultaneity
 
-### More on Omitted Variable Bias 
+## More on Omitted Variable Bias 
 
 
 - Remember the wage regression equation (true model)
@@ -56,7 +67,7 @@ Notice that $v_i = \beta_2 A_i + u_i$, so that $S_i$ and $v_i$ is likely to be c
 - However, can you make sure that $S_i$ is indeed exogenous after adding many control variables? 
 - Multivariate regression cannot deal with the presence of **unobserved heterogeneity** that matters both in wage and years of schooling. 
 
-### Measurement error 
+## Measurement error 
 
 - Measurement error in variables
     - Reporting error, respondent does not understand the question, etc...
@@ -66,7 +77,8 @@ y_{i}=\beta_{0}+\beta_{1}x_{i}^{*}+\epsilon_{i}
 $$
 - Here, we only observe $x_{i}$ with error: 
 $$
-x_{i}=x_{i}^{*}+e_{i}$$
+x_{i}=x_{i}^{*}+e_{i}
+$$
 where $e_{i}$ is measurement error. 
     - $e_{i}$ is independent from $\epsilon_i$ and $x_i^*$ (called classical measurement error)
     - You can think $e_i$ as a noise added to the data.
@@ -79,7 +91,8 @@ y_{i} = & \  \beta_{0}+\beta_{1}(x_{i}-e_{i})+\epsilon_{i} \\
 $$ 
 - Then we have correlation between $x_{i}$ and the error $\epsilon_{i}-\beta_{1}e_{i}$, violating the mean independence assumption
 
-### Simultaneity (or reverse causality)
+
+## Simultaneity (or reverse causality)
 - Dependent variable and explanatory variable (endogenous variable) are determined simultaneously.
 - Consider the demand and supply curve
 $$
@@ -96,9 +109,13 @@ $$
 implying the correlation between the price and the error term. 
 
 - Putting this differently, the data points we observed is the intersection of these supply and demand curves. 
+
+--- 
+
 - How can we distinguish demand and supply?
 ![Demand Supply](fig_Demand_Supply.png)
 
+# IV Idea
 
 ## Idea of IV Regression
 
@@ -113,6 +130,8 @@ and $Cov(x_i, \epsilon_i) \neq 0$.
     2. **Relevance**: $Cov(z_i, x_i) \neq 0$. There should be correlation between IV and endogenous variable $x_i$.
 - Idea: Use the variation of $x_i$ **induced by instrument $z_i$** to estimate the direct (causal) effect of $x_i$ on $y_i$, that is $\beta_1$!.
 
+---
+
 - More on this: 
     1. Intuitively, the OLS estimator captures the correlation between $x$ and $y$. 
     2. If there is no correlation between $x$ and $\epsilon$, it captures the causal effect $\beta_1$. 
@@ -121,13 +140,14 @@ and $Cov(x_i, \epsilon_i) \neq 0$.
         - Such a variation should exist under **relevance** assumption.
         - Such a variation should not be correlated with the error under **independence assumption**
     5. By looking at the correlation between such variation and $y$, you can get the causal effect $\beta_1$.
+    
+---
 
 ![Idea IV](fig_IV_idea.png)
 
+# IV framework
 
-## Formal Framework and Estimation
-
-### Model
+## Model
 
 - We now introduce a general framework with multiple endogenous variables and multiple instruments. 
 - Consider the model 
@@ -145,7 +165,7 @@ with $i=1,\dots,n$ is the general instrumental variables regression model where
     - $Z_{1i},\dots,Z_{Mi}$ are $M$ instrumental variables
 - I will discuss conditions for valid instruments later.
 
-### Estimation by Two Stage Least Squares (2SLS)
+## Estimation by Two Stage Least Squares (2SLS)
 
 - We can estimate the above model by **Two Stage Least Squares (2SLS)**
 - Step 1: **First-stage regression(s)** 
@@ -155,7 +175,7 @@ with $i=1,\dots,n$ is the general instrumental variables regression model where
     - Regress the dependent variable $Y_i$ on **the predicted values** of all endogenous regressors ($\widehat{X}_{1i},\dots,\widehat{X}_{ki}$), all exogenous variables ($W_{1i},\dots,W_{ri}$) and an intercept using OLS. 
     - This gives $\widehat{\beta}_{0}^{TSLS},\dots,\widehat{\beta}_{k+r}^{TSLS}$, the 2SLS estimates of the model coefficients.
 
-#### Intuition
+## Intuition
 - Why does this work? Let's go back to the simple example with 1 endogenous variable and 1 IV. 
 - In the first stage, we estimate  
 $$
@@ -169,9 +189,9 @@ $$
 - Since $\widehat{x}_i$ depends only on $z_i$, which is uncorrelated with $u_i$, the second stage can estimate $\beta_1$ without bias.
 - Can you see the importance of both independence and relevance asssumption here? (More formal discussion later)
 
-### Conditions for Valid IVs in a general framework
+# Conditions for IV
 
-#### Necessary condition
+## Conditions for Valid IVs: Necessary condition
 
 - Depending on the number of IVs, we have three cases
     1. Over-identification: $M > K$
@@ -180,7 +200,7 @@ $$
 - The necessary condition is $M \geq K$.
     - We should have more IVs than endogenous variables!!
 
-#### Sufficient condition
+## Sufficient condition
 - How about sufficiency?
 - In a general framework, the sufficient condition for valid instruments is given as follows.
     1. **Independence**: $Cov( Z_{mi}, \epsilon_i) = 0$ for all $m$.
@@ -190,6 +210,9 @@ $$
     $$
     are not perfectly multicollinear. 
 - What does the relevance condition mean? 
+
+## Relevance condition 
+
 - In the simple example above, The first stage is   
 $$
 x_i = \pi_0 + \pi_1 z_i + v_i
@@ -206,15 +229,16 @@ $$
 and one of $\pi_1 , \cdots, \pi_M$ should be non-zero. 
 - Intuitively speaking, **the instruments should be correlated with endogenous variables after controlling for exogenous variables**
 
-## Check Instrument Validity
-
-### Relevance
+## Check Instrument Validity: Relevance
 
 - Instruments are **weak** if those instruments explain little variation in the endogenous variables. 
 - Weak instruments lead to 
     1. imprecise estimates (higher standard errors)
     2. The asymptotic distribution would deviate from a normal distribution even if we have a large sample.
 - Here is a rule of thumb to check the relevance conditions. 
+
+--- 
+
 - Consider the case with one endogenous variable $X_{1i}$.
 - The first stage regression  
 $$
@@ -230,8 +254,8 @@ $$
     - This is F test (test of joint hypothesis)
 - If we can reject this, we can say no concern for weak instruments.
 - A rule of thumbs is that the F statistic should be larger than 10.
-- 
-### Independence (Instrument exogeneity)
+
+## Independence (Instrument exogeneity)
 - Arguing for independence is hard and a key in empirical analysis.
 - Justification of this assumption depends on a context, institutional features, etc...
 - We will see this through examples in the next chapter.

@@ -1,30 +1,35 @@
 ---
-title: "Regression 2"
+title: "Regression 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+date: "Last updated: `r Sys.Date()`"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
 ---
 
-# Linear Regression 2: Implementation in R
+# Introduction
 
-# Acknowledgement
+## Acknowledgement
 This note is based on  "Introduction to Econometrics with R". https://www.econometrics-with-r.org/index.html
 
-
-## Implementation in R 
-
-
-### Preliminary: packages
+## Preliminary: packages
 
 - We use the following packages:
     - `AER` : 
@@ -47,7 +52,7 @@ library("lmtest")
 
 ````
 
-### Empirical setting: Data from California School
+## Empirical setting: Data from California School
 
 - Question: How does the student-teacher ratio affects test scores?
 - We use data from California school, which is included in `AER` package. 
@@ -58,6 +63,8 @@ library("lmtest")
 data(CASchools)
 ```
 
+---
+
 - Use `class()` function to see `CASchools` is `data.frame` object.
 ```{r}
 class(CASchools)
@@ -67,7 +74,7 @@ class(CASchools)
     - Step 1: Look at data (descriptive analysis) 
     - Step 2: Run regression
     
-### Step 1: Descriptive analysis
+## Step 1: Descriptive analysis
 
 - It is always important to grasp your data before running regression. 
 - `head()` function give you a first overview of the data.
@@ -79,7 +86,7 @@ head(CASchools)
 
 - Alternatively, you can use `browse()` to see the entire dataset in browser window.
 
-#### Create variables
+## Create variables
 
 - Create several variables that are needed for the analysis.
 - We use `dplyr` for this purpose.
@@ -92,7 +99,7 @@ CASchools %>%
 ```
 
 
-#### Descriptive statistics
+## Descriptive statistics
 
 - There are several ways to show descriptive statistics
 - The standard one is to use `summary()` function
@@ -158,7 +165,7 @@ CASchools %>%
 - We will use `stargazer` to report regression results.
 
 
-#### Scatter plot
+## Scatter plot
 
 - Let's see how test score and student-teacher-ratio is correlated. 
 
@@ -178,9 +185,9 @@ plot(score ~ STR,
 cor(CASchools$STR, CASchools$score)
 ``` 
 
-### Step 2: Run regression
+## Step 2: Run regression
 
-#### Simple linear regression
+## Simple linear regression
 
 - We use `lm()` function to run linear regression
 - First, consider the simple linear regression 
@@ -212,7 +219,7 @@ summary(model1_summary)
     
 - You can add more variable in the regression (will see this soon)
 
-#### Correction of Robust standard error
+## Correction of Robust standard error
 
 - We use `vcovHC()` function, a partof the package `sandwich`, to obtain the robust standard errors.
     - The package `sandwich` is automatically loaded if you load `AER` package.
@@ -241,7 +248,7 @@ coeftest(model1_summary, vcov. = vcov)
 
 ```
 
-#### Report by Stargazer
+## Report by Stargazer
 
 - `stargazer` is useful to show the regression result. 
 
@@ -272,7 +279,7 @@ stargazer( model1_summary,
 ```
 
 
-#### Full results
+## Full results
 
 Taken from https://www.econometrics-with-r.org/7-6-analysis-of-the-test-score-data-set.html
 

@@ -1,21 +1,31 @@
 ---
-title: "Panal Data 1"
-author: "Instructor: Yuta Toyama"
-date: "Last updated: March 28, 2020"
-
+title: "Panal Data 1: Framework"
+author: 'Instructor: Yuta Toyama'
+date: "Last updated: 2020-03-30"
+fig_width: 6 
+fig_height: 4 
 output: 
   html_document:
-#    theme: cerulean
-    theme: readable
+    theme: lumen
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
+    df_print: paged
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
+  
 ---
 
-# Panel Data
+# Introduction
 
 ## Contents
 
@@ -102,7 +112,7 @@ $$
 $$
 Then apply the OLS estimator to the above equation!.
 
-### Importance of within variation
+## Importance of within variation
 
 - As I talked before, the variation of the explanatory variable is key for precisely estimating the coefficients (once we control for the endogeneity).
 - Within transformation eliminates the time-invariant unobserved factor, which is a large source of endogeneity in many situations. 
