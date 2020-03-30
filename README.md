@@ -12,21 +12,23 @@ The Github repo is maintained by [Yuta Toyama](https://yutatoyama.github.io/).
 
 ---
 
-1. Introduction [[Note]](01_Introduction/Introduction_doc.html)
-2. R Basics 1 [[Note]](02_RIntro/02_programmingR.html)
-3. R Basics 2 [[Note]](02_RIntro/03_data.html)
-4. Review of Statistics [[Note]](03_Stat/Statistics.html)
-5. Regression 1 [[Note]](04_Regression/Regression1.html)
-6. Regression 2 [[Note]](04_Regression/Regression2.html)
-7. Regression 3 [[Note]](04_Regression/Regression3.html)
-8. Instrumental Variable 1 [[Note]](05_IV/IV1.html)
-9. Instrumental Variable 2 [[Note]](05_IV/IV2.html)
-10. Panel Data 1 [[Note]](06_Panel/Panel1.html)
-11. Panel Data 2 [[Note]](06_Panel/Panel2.html)
-12. Introduction to Causal Inference [[Slide]](07_ProgramEvaluation/Slide_Causal1_Intro.pdf) [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)
-13. Difference-in-differences [[Slide]](07_ProgramEvaluation/Slide_Causal2_DID.pdf) [[Note]](07_ProgramEvaluation/ProgramEvaluation2.html)
-14. Regression Discontinuity [[Slide]](07_ProgramEvaluation/Slide_Causal3_RD.pdf) [[Note]](07_ProgramEvaluation/ProgramEvaluation3.html)
 
+| No. | Topic                   | Note                                                    | Slide                                                   |
+|-----|-------------------------|---------------------------------------------------------|---------------------------------------------------------|
+| 1   | Introduction            | [[Note]](01_Introduction/Introduction_doc.html)         | [[Slide]](01_Introduction/Introduction_doc.pdf)         |
+| 2   | R Basics 1              | [[Note]](02_RIntro/programmingR1.html)                  | [[Slide]](02_RIntro/programmingR1.pdf)                  |
+| 3   | R Basics 2              | [[Note]](02_RIntro/programmingR2.html)                  | [[Slide]](02_RIntro/programmingR2.pdf)                  |
+| 4   | Review of Statistics    | [[Note]](03_Stat/Statistics.html)                       | [[Slide]](03_Stat/Statistics.pdf)                       |
+| 5   | Regression 1            | [[Note]](04_Regression/Regression1.html)                | [[Slide]](04_Regression/Regression1.pdf)                |
+| 6   | Regression 2            | [[Note]](04_Regression/Regression2.html)                | [[Slide]](04_Regression/Regression2.pdf)                |
+| 7   | Regression 3            | [[Note]](04_Regression/Regression3.html)                | [[Slide]](04_Regression/Regression3.pdf)                |
+| 8   | Instrumental variable 1 | [[Note]](05_IV/IV1.html)                                | [[Slide]](05_IV/IV1.pdf)                                |
+| 9   | Instrumental variable 2 | [[Note]](05_IV/IV2.html)                                | [[Slide]](05_IV/IV2.pdf)                                |
+| 10  | Panel data 1            | [[Note]](06_Panel/Panel1.html)                          | [[Slide]](06_Panel/Panel1.pdf)                          |
+| 11  | Panel data 2            | [[Note]](06_Panel/Panel2.html)                          | [[Slide]](06_Panel/Panel2.pdf)                          |
+| 12  | Program Evaluation 1    | [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation1.pdf)  |
+| 13  | Program Evaluation 2    | [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation1.pdf)  |
+| 14  | Program Evaluation 3    | [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation1.pdf)  |
 
 ## License
 This work is licensed under GNU General Public License v3.0.
