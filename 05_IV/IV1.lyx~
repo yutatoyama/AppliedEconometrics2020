@@ -1,0 +1,2891 @@
+#LyX file created by tex2lyx 2.3
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin C:/Users/Yuta/Dropbox/Teaching/2020_1_3_4_Applied_Metrics/Note_Github/05_IV/
+\textclass beamer
+\begin_preamble
+ % options for packages loaded elsewhere
+
+%
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{ifxetex}
+\usepackage{ifluatex}\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage{textcomp}% provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+\defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usetheme[]{Madrid}
+\usecolortheme{lily}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+
+\urlstyle{same}  % don't use monospace font for urls
+\newif\ifbibliography
+\usepackage{grffile}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+% set default figure placement to htbp
+
+\def\fps@figure{htbp}
+
+
+\usetheme{Madrid}        
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{footline}[frame number] 
+\setbeamercolor{page number in head/foot}{fg=black}
+
+\setbeamersize{text margin left=3mm,text margin right=3mm}
+\useoutertheme[footline=empty,subsection=false]{miniframes} 
+\usecolortheme{lily}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamertemplate{items}[default]
+
+\setlength{\leftmargini}{14pt}
+
+%% change fontsize of R code
+\let\oldShaded\Shaded
+\let\endoldShaded\endShaded
+\renewenvironment{Shaded}{\footnotesize\oldShaded}{\endoldShaded}
+
+%% change fontsize of output
+\let\oldverbatim\verbatim
+\let\endoldverbatim\endverbatim
+\renewenvironment{verbatim}{\footnotesize\oldverbatim}{\endoldverbatim}
+
+\title{Instrumental Variable Estimation 1: Framework}
+\author{Instructor: Yuta Toyama}
+\date{Last updated: 2020-04-02}
+
+
+\end_preamble
+\options ignorenonframetext,
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding utf8
+\fontencoding T1
+\font_roman "lmodern" "default"
+\font_sans "default" "default"
+\font_typewriter "lmodern" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "Instrumental Variable Estimation 1: Framework"
+\pdf_author "Instructor: Yuta Toyama"
+\pdf_bookmarks 0
+\pdf_bookmarksnumbered 0
+\pdf_bookmarksopen 0
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks 1
+\pdf_pdfborder 1
+\pdf_colorlinks 0
+\pdf_backref section
+\pdf_pdfusetitle 0
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth -2
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+frame{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+titlepage
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{introduction}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "introduction"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Introduction: Endogeneity Problem and its Solution
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{introduction-endogeneity-problem-and-its-solution}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+When 
+\begin_inset Formula \(Cov(x_k, \epsilon)=0\)
+\end_inset
+
+ does not hold, we have 
+\series bold
+endogeneity problem
+\series default
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We call such 
+\begin_inset Formula \(x_k\)
+\end_inset
+
+ an 
+\series bold
+endogenous variable
+\series default
+. 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+In this chapter, I introduce an 
+\series bold
+instrumental variable
+\series default
+ estimation method, a solution to this issue. 
+\end_layout
+
+\begin_layout Itemize
+The lecture plan
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+More on endogeneity issues 
+\end_layout
+
+\begin_layout Enumerate
+Framework 
+\end_layout
+
+\begin_layout Enumerate
+Implementation in R 
+\end_layout
+
+\begin_layout Enumerate
+Examples 
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{endogeneity}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Endogeneity
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "endogeneity"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Examples of Endogeneity Problem
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{examples-of-endogeneity-problem}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Here, I explain a bit more about endogeneity problems.
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Omitted variable bias 
+\end_layout
+
+\begin_layout Enumerate
+Measurement error 
+\end_layout
+
+\begin_layout Enumerate
+Simultaneity 
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+More on Omitted Variable Bias
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{more-on-omitted-variable-bias}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Remember the wage regression equation (true model) 
+\begin_inset Formula \[
+  \begin{aligned}
+  \log W_{i}  &=&  & \beta_{0}+\beta_{1}S_{i}+\beta_{2}A_{i}+u_{i} \\
+  E[u_{i}|S_{i},A_{i}]    &=& & 0
+  \end{aligned}
+  \]
+\end_inset
+
+where 
+\begin_inset Formula \(W_{i}\)
+\end_inset
+
+ is wage, 
+\begin_inset Formula \(S_{i}\)
+\end_inset
+
+ is the years of schooling, and 
+\begin_inset Formula \(A_{i}\)
+\end_inset
+
+ is the ability. 
+\end_layout
+
+\begin_layout Itemize
+Suppose that you omit 
+\begin_inset Formula \(A_i\)
+\end_inset
+
+ and run the following regression instead. 
+\begin_inset Formula \[
+  \log W_{i}  =   \alpha_{0}+\alpha_{1} S_{i} + v_i 
+  \]
+\end_inset
+
+Notice that 
+\begin_inset Formula \(v_i = \beta_2 A_i + u_i\)
+\end_inset
+
+, so that 
+\begin_inset Formula \(S_i\)
+\end_inset
+
+ and 
+\begin_inset Formula \(v_i\)
+\end_inset
+
+ is likely to be correlated. 
+\end_layout
+
+\begin_layout Itemize
+You might want to add more and more additional variables to capture the effect of ability.
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Test scores, GPA, SAT scores, etc\SpecialChar ldots
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+However, can you make sure that 
+\begin_inset Formula \(S_i\)
+\end_inset
+
+ is indeed exogenous after adding many control variables? 
+\end_layout
+
+\begin_layout Itemize
+Multivariate regression cannot deal with the presence of 
+\series bold
+unobserved heterogeneity
+\series default
+ that matters both in wage and years of schooling. 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Measurement error
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{measurement-error}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Measurement error in variables
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Reporting error, respondent does not understand the question, etc\SpecialChar ldots
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Consider the regression 
+\begin_inset Formula \[
+  y_{i}=\beta_{0}+\beta_{1}x_{i}^{*}+\epsilon_{i}
+  \]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Here, we only observe 
+\begin_inset Formula \(x_{i}\)
+\end_inset
+
+ with error: 
+\begin_inset Formula \[
+  x_{i}=x_{i}^{*}+e_{i}
+  \]
+\end_inset
+
+where 
+\begin_inset Formula \(e_{i}\)
+\end_inset
+
+ is measurement error.
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\begin_inset Formula \(e_{i}\)
+\end_inset
+
+ is independent from 
+\begin_inset Formula \(\epsilon_i\)
+\end_inset
+
+ and 
+\begin_inset Formula \(x_i^*\)
+\end_inset
+
+ (called classical measurement error) 
+\end_layout
+
+\begin_layout Itemize
+You can think 
+\begin_inset Formula \(e_i\)
+\end_inset
+
+ as a noise added to the data. 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The regression equation is 
+\begin_inset Formula \[
+  \begin{aligned}
+  y_{i} = & \  \beta_{0}+\beta_{1}(x_{i}-e_{i})+\epsilon_{i} \\
+    = & \ \beta_{0}+\beta_{1}x_{i}+(\epsilon_{i}-\beta_{1}e_{i})
+  \end{aligned}
+  \]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Then we have correlation between 
+\begin_inset Formula \(x_{i}\)
+\end_inset
+
+ and the error 
+\begin_inset Formula \(\epsilon_{i}-\beta_{1}e_{i}\)
+\end_inset
+
+, violating the mean independence assumption 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Simultaneity (or reverse causality)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{simultaneity-or-reverse-causality}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Dependent variable and explanatory variable (endogenous variable) are determined simultaneously. 
+\end_layout
+
+\begin_layout Itemize
+Consider the demand and supply curve 
+\begin_inset Formula \[
+  \begin{aligned}
+  q^{d}   =\beta_{0}^{d}+\beta_{1}^{d}p+\beta_{2}^{d}x+u^{d} \\
+  q^{s}   =\beta_{0}^{s}+\beta_{1}^{s}p+\beta_{2}^{s}z+u^{s}
+  \end{aligned}
+  \]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The equilibrium price and quantity are determined by 
+\begin_inset Formula \(q^{d}=q^{s}\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+In this case, 
+\begin_inset Formula \[
+  p=\frac{(\beta_{2}^{s}z-\beta_{2}^{d}z)+(\beta_{0}^{s}-\beta_{0}^{d})+(u^{s}-u^{d})}{\beta_{1}^{d}-\beta_{1}^{s}}
+  \]
+\end_inset
+
+implying the correlation between the price and the error term. 
+\end_layout
+
+\begin_layout Itemize
+Putting this differently, the data points we observed is the intersection of these supply and demand curves. 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+How can we distinguish demand and supply? 
+\begin_inset Graphics 
+	filename fig_Demand_Supply.png
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{iv-idea}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+IV Idea
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "iv-idea"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Idea of IV Regression
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{idea-of-iv-regression}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Let's start with a simple case. 
+\begin_inset Formula \[
+  y_i = \beta_0 + \beta_1 x_i + \epsilon_i, 
+  \]
+\end_inset
+
+and 
+\begin_inset Formula \(Cov(x_i, \epsilon_i) \neq 0\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+Now, we consider another variable 
+\begin_inset Formula \(z_i\)
+\end_inset
+
+, which we call 
+\series bold
+instrumental variable (IV)
+\series default
+. 
+\end_layout
+
+\begin_layout Itemize
+Instrumental variable 
+\begin_inset Formula \(z_i\)
+\end_inset
+
+ should satisfies the following two conditions:
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Independence
+\series default
+: 
+\begin_inset Formula \(Cov(z_i, \epsilon_i) = 0\)
+\end_inset
+
+. No correlation between IV and error. 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Relevance
+\series default
+: 
+\begin_inset Formula \(Cov(z_i, x_i) \neq 0\)
+\end_inset
+
+. There should be correlation between IV and endogenous variable 
+\begin_inset Formula \(x_i\)
+\end_inset
+
+. 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Idea: Use the variation of 
+\begin_inset Formula \(x_i\)
+\end_inset
+
+ 
+\series bold
+induced by instrument 
+\begin_inset Formula \(z_i\)
+\end_inset
+
+
+\series default
+ to estimate the direct (causal) effect of 
+\begin_inset Formula \(x_i\)
+\end_inset
+
+ on 
+\begin_inset Formula \(y_i\)
+\end_inset
+
+, that is 
+\begin_inset Formula \(\beta_1\)
+\end_inset
+
+!. 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+More on this:
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Intuitively, the OLS estimator captures the correlation between 
+\begin_inset Formula \(x\)
+\end_inset
+
+ and 
+\begin_inset Formula \(y\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Enumerate
+If there is no correlation between 
+\begin_inset Formula \(x\)
+\end_inset
+
+ and 
+\begin_inset Formula \(\epsilon\)
+\end_inset
+
+, it captures the causal effect 
+\begin_inset Formula \(\beta_1\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Enumerate
+If not, the OLS estimator captures both direct and indirect effect, the latter of which is bias. 
+\end_layout
+
+\begin_layout Enumerate
+Now, let's capture the variation of 
+\begin_inset Formula \(x\)
+\end_inset
+
+ due to instrument 
+\begin_inset Formula \(z\)
+\end_inset
+
+,
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Such a variation should exist under 
+\series bold
+relevance
+\series default
+ assumption. 
+\end_layout
+
+\begin_layout Itemize
+Such a variation should not be correlated with the error under 
+\series bold
+independence assumption
+\series default
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+By looking at the correlation between such variation and 
+\begin_inset Formula \(y\)
+\end_inset
+
+, you can get the causal effect 
+\begin_inset Formula \(\beta_1\)
+\end_inset
+
+. 
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename fig_IV_idea.png
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Idea IV
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{iv-framework}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+IV framework
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "iv-framework"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Model
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{model}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We now introduce a general framework with multiple endogenous variables and multiple instruments. 
+\end_layout
+
+\begin_layout Itemize
+Consider the model 
+\begin_inset Formula \[
+  \begin{aligned}
+  Y_i = \beta_0 + \beta_1 X_{1i} + \dots + \beta_K X_{Ki} + \beta_{K+1} W_{1i} + \dots + \beta_{K+R} W_{Ri} + u_i, 
+  \end{aligned}
+  \]
+\end_inset
+
+with 
+\begin_inset Formula \(i=1,\dots,n\)
+\end_inset
+
+ is the general instrumental variables regression model where
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\begin_inset Formula \(Y_i\)
+\end_inset
+
+ is the dependent variable 
+\end_layout
+
+\begin_layout Itemize
+
+\begin_inset Formula \(\beta_0,\dots,\beta_{K+R}\)
+\end_inset
+
+ are 
+\begin_inset Formula \(1+K+R\)
+\end_inset
+
+ unknown regression coefficients 
+\end_layout
+
+\begin_layout Itemize
+
+\begin_inset Formula \(X_{1i},\dots,X_{Ki}\)
+\end_inset
+
+ are 
+\begin_inset Formula \(K\)
+\end_inset
+
+ endogenous regressors: 
+\begin_inset Formula \(Cov(X_{ki}, u_i) \neq 0\)
+\end_inset
+
+ for all 
+\begin_inset Formula \(k\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+
+\begin_inset Formula \(W_{1i},\dots,W_{Ri}\)
+\end_inset
+
+ are 
+\begin_inset Formula \(R\)
+\end_inset
+
+ exogenous regressors which are uncorrelated with 
+\begin_inset Formula \(u_i\)
+\end_inset
+
+. 
+\begin_inset Formula \(Cov(W_{ri}, u_i) = 0\)
+\end_inset
+
+ for all 
+\begin_inset Formula \(r\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+
+\begin_inset Formula \(u_i\)
+\end_inset
+
+ is the error term 
+\end_layout
+
+\begin_layout Itemize
+
+\begin_inset Formula \(Z_{1i},\dots,Z_{Mi}\)
+\end_inset
+
+ are 
+\begin_inset Formula \(M\)
+\end_inset
+
+ instrumental variables 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+I will discuss conditions for valid instruments later. 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Estimation by Two Stage Least Squares (2SLS)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{estimation-by-two-stage-least-squares-2sls}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We can estimate the above model by 
+\series bold
+Two Stage Least Squares (2SLS)
+\series default
+ 
+\end_layout
+
+\begin_layout Itemize
+Step 1: 
+\series bold
+First-stage regression(s)
+\series default
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Run an OLS regression for each of the endogenous variables (
+\begin_inset Formula \(X_{1i},\dots,X_{ki}\)
+\end_inset
+
+) on all instrumental variables (
+\begin_inset Formula \(Z_{1i},\dots,Z_{mi}\)
+\end_inset
+
+), all exogenous variables (
+\begin_inset Formula \(W_{1i},\dots,W_{ri}\)
+\end_inset
+
+) and an intercept. 
+\end_layout
+
+\begin_layout Itemize
+Compute the fitted values (
+\begin_inset Formula \(\widehat{X}_{1i},\dots,\widehat{X}_{ki}\)
+\end_inset
+
+). 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Step 2: 
+\series bold
+Second-stage regression
+\series default
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Regress the dependent variable 
+\begin_inset Formula \(Y_i\)
+\end_inset
+
+ on 
+\series bold
+the predicted values
+\series default
+ of all endogenous regressors (
+\begin_inset Formula \(\widehat{X}_{1i},\dots,\widehat{X}_{ki}\)
+\end_inset
+
+), all exogenous variables (
+\begin_inset Formula \(W_{1i},\dots,W_{ri}\)
+\end_inset
+
+) and an intercept using OLS. 
+\end_layout
+
+\begin_layout Itemize
+This gives 
+\begin_inset Formula \(\widehat{\beta}_{0}^{TSLS},\dots,\widehat{\beta}_{k+r}^{TSLS}\)
+\end_inset
+
+, the 2SLS estimates of the model coefficients. 
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Intuition
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{intuition}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Why does this work? Let's go back to the simple example with 1 endogenous variable and 1 IV. 
+\end_layout
+
+\begin_layout Itemize
+In the first stage, we estimate
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula \[
+  x_i = \pi_0 + \pi_1 z_i + v_i
+  \]
+\end_inset
+
+by OLS and obtain the fitted value 
+\begin_inset Formula \(\widehat{x}_i = \widehat{\pi}_0 + \widehat{\pi}_1 z_i\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+In the second stage, we estimate 
+\begin_inset Formula \[
+  y_i = \beta_0 + \beta_1 \widehat{x}_i + u_i
+  \]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Since 
+\begin_inset Formula \(\widehat{x}_i\)
+\end_inset
+
+ depends only on 
+\begin_inset Formula \(z_i\)
+\end_inset
+
+, which is uncorrelated with 
+\begin_inset Formula \(u_i\)
+\end_inset
+
+, the second stage can estimate 
+\begin_inset Formula \(\beta_1\)
+\end_inset
+
+ without bias. 
+\end_layout
+
+\begin_layout Itemize
+Can you see the importance of both independence and relevance asssumption here? (More formal discussion later) 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{conditions-for-iv}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conditions for IV
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "conditions-for-iv"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Conditions for Valid IVs: Necessary condition
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{conditions-for-valid-ivs-necessary-condition}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Depending on the number of IVs, we have three cases
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Over-identification: 
+\begin_inset Formula \(M > K\)
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+Just identification] 
+\begin_inset Formula \(M=K\)
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+Under-identification 
+\begin_inset Formula \(M < K\)
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The necessary condition is 
+\begin_inset Formula \(M \geq K\)
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We should have more IVs than endogenous variables!! 
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Sufficient condition
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{sufficient-condition}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+How about sufficiency? 
+\end_layout
+
+\begin_layout Itemize
+In a general framework, the sufficient condition for valid instruments is given as follows.
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Independence
+\series default
+: 
+\begin_inset Formula \(Cov( Z_{mi}, \epsilon_i) = 0\)
+\end_inset
+
+ for all 
+\begin_inset Formula \(m\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Relevance
+\series default
+: In the second stage regression, the variables 
+\begin_inset Formula \[
+      \left( \widehat{X}_{1i},\dots,\widehat{X}_{ki}, W_{1i},\dots,W_{ri}, 1 \right)
+      \]
+\end_inset
+
+are not perfectly multicollinear. 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+What does the relevance condition mean? 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Relevance condition
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{relevance-condition}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+In the simple example above, The first stage is
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula \[
+  x_i = \pi_0 + \pi_1 z_i + v_i
+  \]
+\end_inset
+
+and the second stage is 
+\begin_inset Formula \[
+  y_i = \beta_0 + \beta_1 \widehat{x}_i + u_i
+  \]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The second stage would have perfect multicollinarity if 
+\begin_inset Formula \(\pi_1 = 0\)
+\end_inset
+
+ (i.e., 
+\begin_inset Formula \(\widehat{x}_i = \pi_0\)
+\end_inset
+
+). 
+\end_layout
+
+\begin_layout Itemize
+Back to the general case, the first stage for 
+\begin_inset Formula \(X_k\)
+\end_inset
+
+ can be written as 
+\begin_inset Formula \[
+  X_{ki} = \pi_0 + \pi_1 Z_{1i} + \cdots + \pi_M Z_{Mi} + \pi_{M+1} W_{1i} + \cdots + \pi_{M+R} W_{Ri}
+  \]
+\end_inset
+
+and one of 
+\begin_inset Formula \(\pi_1 , \cdots, \pi_M\)
+\end_inset
+
+ should be non-zero. 
+\end_layout
+
+\begin_layout Itemize
+Intuitively speaking, 
+\series bold
+the instruments should be correlated with endogenous variables after controlling for exogenous variables
+\series default
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Check Instrument Validity: Relevance
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{check-instrument-validity-relevance}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Instruments are 
+\series bold
+weak
+\series default
+ if those instruments explain little variation in the endogenous variables. 
+\end_layout
+
+\begin_layout Itemize
+Weak instruments lead to
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+imprecise estimates (higher standard errors) 
+\end_layout
+
+\begin_layout Enumerate
+The asymptotic distribution would deviate from a normal distribution even if we have a large sample. 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Here is a rule of thumb to check the relevance conditions. 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Consider the case with one endogenous variable 
+\begin_inset Formula \(X_{1i}\)
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Itemize
+The first stage regression
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula \[
+  X_k = \pi_0 + \pi_1 Z_{1i} + \cdots + \pi_M Z_{Mi} + \pi_{M+1} W_{1i} + \cdots + \pi_{M+R} W_{Ri}
+  \]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+And test the null hypothesis 
+\begin_inset Formula \[
+  \begin{aligned}
+  H_0 & : \pi_1 = \cdots = \pi_M = 0 \\ 
+  H_1 & : otherwise
+  \end{aligned}
+  \]
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+This is F test (test of joint hypothesis) 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+If we can reject this, we can say no concern for weak instruments. 
+\end_layout
+
+\begin_layout Itemize
+A rule of thumbs is that the F statistic should be larger than 10. 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\begin_inset Separator plain
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\begin_inset Argument 4
+status collapsed
+
+
+\begin_layout Standard
+Independence (Instrument exogeneity)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+hypertarget{independence-instrument-exogeneity}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_deeper
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+tightlist
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Arguing for independence is hard and a key in empirical analysis. 
+\end_layout
+
+\begin_layout Itemize
+Justification of this assumption depends on a context, institutional features, etc\SpecialChar ldots
+ 
+\end_layout
+
+\begin_layout Itemize
+We will see this through examples in the next chapter. 
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

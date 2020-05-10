@@ -5,6 +5,13 @@ date: "Last updated: `r Sys.Date()`"
 fig_width: 6 
 fig_height: 4 
 output: 
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
   html_document:
     theme: lumen
     highlight: haddock 
@@ -14,14 +21,8 @@ output:
     toc_depth: 2
     toc_float: true
     keep_md: true
+    keep_tex: true
     df_print: paged
-  beamer_presentation:
-    theme: "Madrid"
-    colortheme: "lily"
-    slide_level: 2
-    includes:
-      in_header: "../beamer_header.tex"
-    df_print: tibble
 ---
 
 # Introduction

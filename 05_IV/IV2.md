@@ -1,7 +1,7 @@
 ---
 title: "Instrumental Variable Estimation 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: 2020-03-30"
+date: "Last updated: 2020-04-14"
 fig_width: 6 
 fig_height: 4 
 output: 
@@ -31,7 +31,7 @@ output:
 - I cover three examples of instrumental variable regressions.
     1. Wage regression
     2. Demand curve
-    3. Effects of Voter Turnout
+    3. Effects of Voter Turnout (Hansford and Gomez)
 
 # Wage regression
 

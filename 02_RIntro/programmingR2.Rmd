@@ -17,11 +17,31 @@ output:
     theme: "Madrid"
     colortheme: "lily"
     slide_level: 2
+    keep_tex: true
     includes:
       in_header: "../beamer_header.tex"
     df_print: tibble
 ---
 
+
+```{r wrap-hook}
+library(knitr)
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = knitr:::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+```
+
+```{r}
+knitr::opts_chunk$set(collapse = FALSE, tidy = FALSE, linewidth = 75)
+```
 
 
 
@@ -213,7 +233,9 @@ mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
 - An alternative would be to use the `subset()` function, which has a much more readable syntax.
 
 ```{r, eval = FALSE}
-subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
+subset(mpg, 
+       subset = hwy > 35, 
+       select = c("manufacturer", "model", "year"))
 ```
 
 ---
@@ -222,8 +244,8 @@ subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
 ```{r, eval = FALSE}
 library(dplyr)
 mpg %>% 
-filter(hwy > 35) %>% 
-select(manufacturer, model, year)
+  filter(hwy > 35) %>% 
+  select(manufacturer, model, year)
 ```
 - I will give you an assignment about `dplyr` package in the `DataCamp` as a makeup lecture.
 
