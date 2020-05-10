@@ -7,6 +7,7 @@ output:
     theme: "Madrid"
     colortheme: "lily"
     slide_level: 2
+    toc: yes
     includes:
       in_header: "../beamer_header.tex"
   html_document:
@@ -21,54 +22,102 @@ output:
 
 # Introduction to the course
 
-## What do we do with econometrics?
+## Data analysis is more important than ever
 
-1. Estimating economic relationships
-    1. Demand curve $\log(Q_{t})= \alpha_0 + \alpha_1 P_t + \epsilon_t$
-    2. Production function $Y_{it}=A_{it}K_{it}^{\alpha}L_{it}^{\beta}$
-2. Testing economic theory
-    - Does adverse selection exists in insurance markets?
-    - Are consumers rational?
-3. Determine the effect of a given intervention (causal inference)
-    - What is the effect of increasing minimum wage on employment?
-    [](- Do mergers increase the output price?)
-    - Does democracy cause economic growth? 
-    - Effects of going to private colleges on your future earnings.
-    - Note: Some questions may have underlying economic models, others may not. 
-4. Describe the data (prediction/forecasting)
-    - How does the distribution of wage look like? 
-    - Relationship .b.w electricity consumption and temperature (possibly nonlinear).
-    - Related to machine learning (ML). 
+![](DataScientist.png)
 
----
+- Davenport, Thomas H., and D. J. Patil. "Data Scientist: The Sexiest Job of the 21st Century." Harvard Business Review 90, no. 10 (October 2012): 70–76. https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century
+
+
 
 ## Goal of the Course
 
-1. Understand program evaluation and/or causal inference approach in econometrics
-    - Widely used in applied microeconomics (labor, health, development, IO)
-2. read empirical papers that uses these methods 
-2. Learn how to conduct empirical analysis using R.
+1. Learn **program evaluation and/or causal inference approach** in econometrics
+\bigskip
+2. Learn how to conduct empirical analysis using **R language**.
 
 ---
 
-## Relation to other courses
+## Causal Questions in Economics and Politics
 
-- This course does **NOT** cover:
-    1. Discrete choice models
-    2. Machine learning methods
-    3. Structural estimation
-- I recommend the following courses to learn these topics
-    - Econometrics II or Applied Econometrics by Prof. Hoshino (for topic 1 and 2)
-    - Economic Study (Microeconometrics) by Me (for topic 1 and 3)
-    - Advanced Econometrics by Prof. Ueda and Prod. Dendup (for topic 1)
-- I also highly recommend a special course on causal inference by Prof. Yamamoto
-    - more rigorous treatment of the topic.
-    - intenstive course at the end of August (to be announced)
+- Causality: X causes/affects/impacts Y
+\bigskip
+- Many questions are causal!
+  - How much does an additional year of schooling increase your wage ?
+  - How does online advertisement affect sales of products
+  - Do mergers between firms increase product prices
+  - Does democracy cause economic growth
+  - Does higher turnout benefit Democrats in presidential election?
+\bigskip
+- Use data to infer the causal effects of A on B
 
 ---
 
+## Does **correlation** imply **causality**?
 
-## Why do we need to learn computation 
+- Suppose that X and Y are moving together (**correlated**).
+\bigskip
+- Examples:
+  - 1: Cities with many police officers have more crimes (positive correlation).
+  - 2: Those who went to college earn more money by 10%.
+\bigskip
+- Questions:
+  - Does this mean “X causes Y”?
+  - Is the magnitude of the correlation equal to that of causal effect?
+
+---
+
+## Three cases 
+
+1. Causality
+\bigskip
+2. Reverse causality
+\bigskip
+3. Third factor (often called 'spurious correlation')
+
+
+---
+
+## Case: Is Avigan effective treatment for COVID-19?
+
+- Some Japanese celebrities who caught COVID-19 report their own experience that Anti-flu drug Avigan was effective for recovery.
+  - An episode from Junichi Ishida:  https://www.chunichi.co.jp/chuspo/article/entertainment/news/CK2020042302100136.html
+\bigskip
+- Does this mean Avigan is silver bullet for COVID-19?
+\bigskip
+- Why do we care? 
+  - Side effects of Avigan, resource allocation of public funds, etc.
+
+--- 
+
+## Difficulty 1: Counterfactual
+- **Counterfatual outcome** is never observed 
+\bigskip
+- Even without Avigan, a patient might have gotten better.
+
+--- 
+
+## Difficulty 2: Endogenous selection of treatment
+
+- Suppose we have data on patients who got and did not get Avigan in their treatment.
+\bigskip
+- Does comparison of those people give you treatment effect of Avigan?
+\bigskip
+- Issue: Those who get Avigan and who do not get might be quite different in other aspects. 
+
+--- 
+
+## Solution: Clinical Trial
+
+- Collect patients and **randomly** choose patients who are given the treatment.
+  - Treatment group and control group.
+\bigskip
+- Compare the outcome of treatment and control group to see the effectiveness of treatment.
+\bigskip
+- Fujifilm is now conducting clinical trial on Avigan for COVID-19. https://asia.nikkei.com/Business/Pharmaceuticals/Fujifilm-starts-clinical-trial-on-Avigan-for-coronavirus
+
+
+## Why do we need to learn computation ?
 
 1. Conduct statistical and empirical analysis using your own data set
     1. Construct the data set
@@ -76,13 +125,12 @@ output:
     3. Run regression or estimate an economic object
     4. Make tables and figures that show the results of your analysis.
     
-2. Verify the econometric theory through numerical simulations.
+\bigskip
+2. Confirm implications from econometric theory through numerical simulations.
     - Ex. Asymptotic theory considers the case when the sample size is large enough (i.e., $N \rightarrow \infty$) 
         - Law of large numbers, central limit theorem
         - How well is the asymptotic approximation? 
-    - **Monte Carlo simulations**
-
-- We will learn both aspects in this course.
+    - So called **Monte Carlo simulations**
 
 ---
 
@@ -90,26 +138,58 @@ output:
 
 - Many alternatives: Stata, Matlab, Python, etc...
 1. Free software!!
-    - Stata and Matlab are expensive.
-    - Though you can use Matlab through the campus license from this April.
-2. Good balance between flexibility in programming and easy-to-use for econometric analysis
-    - Stata is easy to use for econometric analysis, but hard to write your own program.
+    - Stata is expensive.
+    - Campus-wide licence for Matlab is available.
+\bigskip
+2. Good balance of flexibility and easy-to-use for econometrics
+    - Stata is easy to use for econometrics, but hard to write your own program.
     - Matlab is the opposite. 
     - You can do everything with R, including data construction, regression analysis, and complicated structural estimation.
 3. Many users
-    - Popular in engineering. 
-    - Many packages being developed (especially important for recently popular tools. )
+    - Popular in data science. 
+    - Many packages being developed (especially machine learning methods)
     
-- Note: Python seems also good, though I have not used it before.
 
 ## Course Plan
 
-1. Introduction to R programming (2-3 weeks)
-2. Review of Statistics (1 week)
-3. Linear Regression (3 weeks)
-4. Instrumental Variable Regression (2 weeks)
-5. Panel Data (2 weeks)
-6. Program Evaluation, or Causal Inference Methods (4 weeks)
+1. Review of Statistics (1 week)
+2. Linear Regression (3 weeks)
+3. Instrumental Variable Regression (2 weeks)
+4. Panel Data (2 weeks)
+5. Program Evaluation and Causal Inference Methods (4 weeks)
+   1. Randomized control trial
+   2. Matching method
+   3. Difference-in-differences
+   4. Regression discontinuity design
+
+
+## Reference
+
+- Lecture notes are based on 
+    1. Christoph Hanck, Martin Arnold, Alexander Gerber and Martin Schmelzer "Introduction to Econometrics with R"  https://www.econometrics-with-r.org/ 
+    2. Wooldridge "Introduction to Econometrics"
+    4. Angrist and Pischke "Mastering Metrics"
+\bigskip
+- Other useful reference for Econometrics
+  - Angrist and Pischke "Mostly Harmless Econometrics"
+      - Japanese translation also available.
+\bigskip
+- Other useful reference for R programming
+  - Wickham and Grolemund "R for Data Science" https://r4ds.had.co.nz/ 
+    - Japanese translation also available.
+
+## Relation to other courses
+
+- This course does **NOT** cover
+    1. Discrete choice models
+    2. Machine learning methods
+    3. Structural estimation
+\bigskip
+- I recommend the following courses to learn these topics
+    - Econometrics II or Applied Econometrics by Prof. Hoshino (for topic 1 and 2)
+    - Economic Study (Microeconometrics) by me (for topic 1 and 3)
+    - Advanced Econometrics by Prof. Ueda and Prod. Dendup (for topic 1)
+
 
 
 # Introduction of `R` and `R studio`

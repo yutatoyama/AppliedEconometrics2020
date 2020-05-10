@@ -1,7 +1,7 @@
 ---
 title: "Review of Statistics"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: 2020-03-30"
+date: "Last updated: 2020-05-10"
 fig_width: 6 
 fig_height: 4 
 output: 
@@ -10,6 +10,7 @@ output:
     highlight: haddock 
     #code_folding: show
     toc: yes
+    number_sections: true
     toc_depth: 2
     toc_float: true
     keep_md: true
@@ -25,7 +26,7 @@ output:
 
 
 
-# A Review of Statistics 
+# Introduction
 
 ## Acknowledgement
 
@@ -36,20 +37,24 @@ output:
 
 The goal of this chapter is 
 
-1. Review of important concepts in statistics
-    1. Estimation
-    2. Hypothesis testing
-2. Review of tools from probability theory
-    1. Law of large numbers
-    2. Central limit theorem
+1. Review of Estimation
+    - Properties of Estimators: Unbiasedness, Consistency
+    - Law of large numbers
+2. Review of Central Limit Theorem
+    - Important tool for hypothesis testing (to be covered later) 
+
+# Statistical Estimation
 
 ## Estimation 
 
 - Estimator: A mapping from the sample data drawn from an unknown population to a certain feature in the population
-- Example: Consider hourly earnings of college graduates $Y$ .
+  - Example: Consider hourly earnings of college graduates $Y$ .
 - You want to estimate the mean of $Y$, defined as $E[Y] = \mu_y$ 
-- Draw a random sample of $n$ i.i.d. (identically and independently distributed) observations ${ Y_1, Y_2, \ldots, Y_N }$
+    - Draw a random sample of $n$ i.i.d. (identically and independently distributed) observations ${ Y_1, Y_2, \ldots, Y_N }$
 - How to estimate $E[Y]$ from the data?
+
+--- 
+
 - Idea 1: Sample mean 
 \[ 
   \bar{Y} = \frac{1}{n} \sum_{i=1}^n Y_i, 
@@ -79,11 +84,30 @@ Consider the estimator $\hat{\mu}_N$ for the unknown parameter $\mu$.
 - Showing these two properties using mathmaetics is straightforward:
     - Unbiasedness: Take expectation.
     - Consistency: Law of large numbers. 
-- Let's examine these two properties using R. 
 
-- Step 1: Prepare a population. Here, I prepare income and age data from PUMS 5% sample of U.S. Census 2000.
+- Let's examine these two properties using R programming!
+
+---
+
+## Step 0: Preparing packages
+
+
+```r
+# Use the following packages
+library("readr")
+library("ggplot2")
+library("reshape")
+
+# If not yet, please install by install.packages("").
+```
+
+
+## Step 1: Prepare a population
+
+- Use income and age data from PUMS 5% sample of U.S. Census 2000.
     - PUMS: Public Use Microdata Sample 
-    - [Download the example data here as a .csv file.](data_pums_2000.csv) Put this file in the same folder as your R script file. 
+    - Download the example data. Put this file in the same folder as your R script file. 
+    - https://yutatoyama.github.io/AppliedEconometrics2020/03_Stat/data_pums_2000.csv
     
 ---
 
@@ -139,7 +163,6 @@ pop_sd
 
 
 
-
 ```r
 fig <- ggplot2::qplot(pop, geom = "density", 
       xlab = "Income",
@@ -177,7 +200,7 @@ fig2 <- qplot(pop, geom = "density",
 plot(fig2)
 ```
 
-<img src="Statistics_files/figure-html/unnamed-chunk-8-1.png" width="0.8" />
+<img src="Statistics_files/figure-html/unnamed-chunk-8-1.png" width="80%" />
 
 ---
 
@@ -189,7 +212,8 @@ plot(fig2)
 
 
 ```r
-# Set the seed for the random number. This is needed to maintaine the reproducibility of the results.
+# Set the seed for the random number. 
+# This is needed to maintaine the reproducibility of the results.
 set.seed(123)
 
 # draw random sample of 100 observations from the variable pop
@@ -216,13 +240,14 @@ for (i in 1:Nsamples ){
 
 
 ```r
-# Simple approach
+# Anotther way to do this.
 result1 <- replicate(expr = mean(sample(x = pop, size = 10)), n = Nsamples)
-result2 <- replicate(expr = mean(sample(x = pop, size = 100)), n = Nsamples)
-result3 <- replicate(expr = mean(sample(x = pop, size = 500)), n = Nsamples)
+result2 <- replicate(expr = mean(sample(x = pop, size = 100)), 
+                     n = Nsamples)
+result3 <- replicate(expr = mean(sample(x = pop, size = 500)), 
+                     n = Nsamples)
 
 # Create dataframe
-
 result_data <- data.frame(  Ybar10 = result1, 
                             Ybar100 = result2, 
                             Ybar500 = result3)
@@ -232,16 +257,6 @@ result_data <- data.frame(  Ybar10 = result1,
 
 - Step 3: See the distribution of those 2000 sample means. 
 
-
-```r
-# Use reshape library
-# install.packages("reshape")
-library("reshape")
-```
-
-```
-## Warning: package 'reshape' was built under R version 3.6.3
-```
 
 ```r
 # Use "melt" to change the format of result_data
@@ -271,10 +286,13 @@ plot(fig)
 
 <img src="Statistics_files/figure-html/unnamed-chunk-13-1.png" width="80%" />
 
+---
+
 - Observation 1: Regardless of the sample size, the average of the sample means is close to the population mean. **Unbiasdeness**
+\bigskip
 - Observation 2: As the sample size gets larger, the distribution is concentrated around the population mean. **Consistency (law of large numbers)**
 
-# Hypothesis Testing
+# Central Limit Theorem
 
 ## Central limit theorem
 
@@ -289,20 +307,24 @@ In other words,
 
 --- 
 
-- The central limit theorem implies that if $N$ is large **enough**, we can **approximate** the distribution of $\bar{Y}$ by the standard normal distribution with mean $\mu$ and variance $\sigma^2 / N$ **regardless of the underlying distribution of $Y$.**  
+## What does CLT mean?
 
+- The central limit theorem implies that if $N$ is large **enough**, we can **approximate** the distribution of $\bar{Y}$ by the standard normal distribution with mean $\mu$ and variance $\sigma^2 / N$ **regardless of the underlying distribution of $Y$.**  
+\bigskip
+- This property is called **asymptotic normality**.
+\bigskip
 - Let's examine this property through simulation!!
 
+## Numerical Simulation
+
 - Use the same example as before. Remember that the underlying income distribution is clearly NOT normal. 
-    - Population mean $\mu = 3.0165467\times 10^{4}$ and standard deviation $\sigma = 3.8306171\times 10^{4}$. Use these numbers. 
+    - Population mean $\mu = 30165.4673315$ 
+    - standard deviation $\sigma = 38306.1712336$. 
 
 ---    
     
 
 ```r
-# Set the seed for the random number
-set.seed(124)
-
 # define function for simulation 
 f_simu_CLT = function(Nsamples, samplesize, pop, pop_mean, pop_sd ){
   
@@ -321,6 +343,9 @@ f_simu_CLT = function(Nsamples, samplesize, pop, pop_mean, pop_sd ){
 
 
 ```r
+# Set the seed for the random number
+set.seed(124)
+
 # Run simulation 
 Nsamples = 2000
 result_CLT1 <- f_simu_CLT(Nsamples, 10, pop, pop_mean, pop_sd )
@@ -335,8 +360,6 @@ result_CLT_data <- data.frame(  Ybar_standardized_10 = result_CLT1,
                             Ybar_standardized_100 = result_CLT2, 
                             Ybar_standardized_1000 = result_CLT3, 
                             Standard_Normal = result_stdnorm)
-
-# Note: If you wanna quicky plot the density, type `plot(density(result1))`. 
 ```
 
 ---
@@ -371,11 +394,6 @@ plot(fig)
 
 <img src="Statistics_files/figure-html/unnamed-chunk-17-1.png" width="80%" />
 
-- As the sample size grows, the distribution of $Z$ converges to the standard normal distribution.
-
-## Hypothesis testing
-
-To be added. 
-
+- As $N$ grows, the distribution is getting closer to the standard normal distribution.
 
 
