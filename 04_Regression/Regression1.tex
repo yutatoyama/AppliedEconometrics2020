@@ -1,0 +1,748 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usetheme[]{Madrid}
+\usecolortheme{lily}
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Linear Regression 1},
+  pdfauthor={Instructor: Yuta Toyama},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\newif\ifbibliography
+\usepackage{longtable,booktabs}
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usetheme{Madrid}        
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{footline}[frame number] 
+\setbeamercolor{page number in head/foot}{fg=black}
+
+\setbeamersize{text margin left=3mm,text margin right=3mm}
+\useoutertheme[footline=empty,subsection=false]{miniframes} 
+\usecolortheme{lily}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamertemplate{items}[default]
+
+\setlength{\leftmargini}{14pt}
+
+%% change fontsize of R code
+\let\oldShaded\Shaded
+\let\endoldShaded\endShaded
+\renewenvironment{Shaded}{\footnotesize\oldShaded}{\endoldShaded}
+
+%% change fontsize of output
+\let\oldverbatim\verbatim
+\let\endoldverbatim\endverbatim
+\renewenvironment{verbatim}{\footnotesize\oldverbatim}{\endoldverbatim}
+
+\title{Linear Regression 1}
+\author{Instructor: Yuta Toyama}
+\date{Last updated: 2020-06-10}
+
+\begin{document}
+\frame{\titlepage}
+
+\hypertarget{framework}{%
+\section{Framework}\label{framework}}
+
+\begin{frame}{Regression framework}
+\protect\hypertarget{regression-framework}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(Y_i\) be the dependent variable and \(X_{ik}\) be k-th
+  explanatory variable.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We have \(K\) explantory variables (along with constant term)
+  \item
+    \(i\) is an index for observations. \(i = 1,\cdots, N\).
+  \item
+    Data (sample): \(\{ Y_i , X_{i1}, \ldots, X_{iK} \}_{i=1}^N\)
+  \end{itemize}
+\item
+  \textbf{Linear regression model} is defined as
+  \[ Y_{i}=\beta_{0}+\beta_{1}X_{1i}+\cdots+\beta_{K}X_{Ki}+\epsilon_{i} \]
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\epsilon_i\): error term (unobserved)
+  \item
+    \(\beta\): coefficients
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Assumptions for Ordinaly Least Squares (OLS) estimation}
+
+  \begin{enumerate}
+  \tightlist
+  \item
+    Random sample: \(\{ Y_i , X_{i1}, \ldots, X_{iK} \}\) is i.i.d.
+    drawn sample
+
+    \begin{itemize}
+    \tightlist
+    \item
+      i.i.d.: identically and independently distributed
+    \end{itemize}
+  \item
+    \(\epsilon_i\) has zero conditional mean \[
+        E[ \epsilon_i | X_{i1}, \ldots, X_{iK}] = 0
+        \]
+  \item
+    Large outliers are unlikely: The random variable \(Y_i\) and
+    \(X_{ik}\) have finite fourth moments.
+  \item
+    No perfect multicollinearity: There is no linear relationship betwen
+    explanatory variables.
+  \end{enumerate}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\tightlist
+\item
+  OLS estimators are the minimizers of the sum of squared residuals: \[
+   \min_{\beta_0, \cdots, \beta_K} \frac{1}{N} \sum_{i=1}^N (Y_i - (\beta_0 + \beta_1 X_{i1} + \cdots + \beta_K X_{iK}))^2
+   \]
+\item
+  Using matrix notation, we have the following analytical formula for
+  the OLS estimator \[
+    \hat{\beta} = (X'X)^{-1} X'Y
+    \] where \[
+  \underbrace{X}_{N\times (K+1)}=\left(\begin{array}{cccc}
+  1 & X_{11} & \cdots & X_{1K}\\
+  \vdots & \vdots &  & \vdots\\
+  1 & X_{N1} & \cdots & X_{NK}
+  \end{array}\right),\underbrace{Y}_{N\times 1}=\left(\begin{array}{c}
+  Y_{1}\\
+  \vdots\\
+  Y_{N}
+  \end{array}\right),\underbrace{\beta}_{(K+1)\times 1}=\left(\begin{array}{c}
+  \beta_{0}\\
+  \beta_{1}\\
+  \vdots\\
+  \beta_{K}
+  \end{array}\right)            
+  \]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Theoretical Properties of OLS estimator}
+\protect\hypertarget{theoretical-properties-of-ols-estimator}{}
+
+\begin{itemize}
+\tightlist
+\item
+  We briefly review theoretical properties of OLS estimator.
+\end{itemize}
+
+\begin{enumerate}
+\tightlist
+\item
+  \textbf{Unbiasedness}: Conditional on the explantory variables \(X\),
+  the expectation of the OLS estimator \(\hat{\beta}\) is equal to the
+  true value \(\beta\). \[
+   E[\hat{\beta} | X] = \beta
+   \]
+\item
+  \textbf{Consistency}: As the sample size \(N\) goes to infinity, the
+  OLS estimator \(\hat{\beta}\) converges to \(\beta\) in probability \[
+   \hat{\beta}\overset{p}{\longrightarrow}\beta
+   \]
+\item
+  \textbf{Asymptotic normality}: Will talk this
+  \protect\hyperlink{Statistical-Inference}{later}
+\end{enumerate}
+
+\end{frame}
+
+\hypertarget{specification}{%
+\section{Specification}\label{specification}}
+
+\begin{frame}{Interpretation and Specifications of Linear Regression
+Model}
+\protect\hypertarget{interpretation-and-specifications-of-linear-regression-model}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Remember that \[ 
+    Y_{i}=\beta_{0}+\beta_{1}X_{1i}+\cdots+\beta_{K}X_{Ki}+\epsilon_{i} 
+    \]
+\item
+  The coefficient \(\beta_k\) captures the effect of \(X_k\) on \(Y\)
+  \textbf{ceteris paribus (all things being equal)}
+\item
+  Equivalently, if \(X_k\) is continuous random variable, \[
+    \frac{\partial Y}{\partial X_k} = \beta_k 
+        \]
+\item
+  If we can estimate \(\beta_k\) without bias, can obtain \textbf{causal
+  effect} of \(X_k\) on \(Y\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This is of course very difficult task. We will see this more later.
+  \end{itemize}
+\item
+  Several specifications frequently used in empirical analysis.
+
+  \begin{enumerate}
+  \tightlist
+  \item
+    Nonlinear term
+  \item
+    log specification
+  \item
+    dummy (categorical) variables
+  \item
+    interaction terms
+  \end{enumerate}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Nonlinear term}
+\protect\hypertarget{nonlinear-term}{}
+
+\begin{itemize}
+\tightlist
+\item
+  We can capture non-linear relationship between \(Y\) and \(X\) in a
+  linearly additive form \[
+    Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \beta_3 X_i^3 + \epsilon_i
+    \]
+\item
+  As long as the error term \(\epsilon_i\) appreas in a additively
+  linear way, we can estimate the coefficients by OLS.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Multicollinarity could be an issue if we have many polynomials (see
+    later).
+  \item
+    You can use other non-linear variables such as \(log(x)\) and
+    \(\sqrt{x}\).
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{log specification}
+\protect\hypertarget{log-specification}{}
+
+\begin{itemize}
+\tightlist
+\item
+  We often use \texttt{log} variables in both dependent and independent
+  variables.
+\item
+  Using \texttt{log} changes the interpretation of the coefficient
+  \(\beta\) in terms of scales.
+\end{itemize}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Dependent & Explanatory & interpretation\tabularnewline
+\midrule
+\endhead
+\(Y\) & \(X\) & 1 unit increase in \(X\) causes \(\beta\) units change
+in Y\tabularnewline
+\(\log Y\) & \(X\) & 1 unit increase in \(X\) causes \(100 \beta \%\)
+incchangerease in \(Y\)\tabularnewline
+\(Y\) & \(\log X\) & \(1\%\) increase in \(X\) causes \(\beta / 100\)
+unit change in \(Y\)\tabularnewline
+\(\log Y\) & \(\log X\) & \(1\%\) increase in \(X\) causes \(\beta \%\)
+change in \(Y\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{frame}
+
+\begin{frame}{Dummy variable}
+\protect\hypertarget{dummy-variable}{}
+
+\begin{itemize}
+\tightlist
+\item
+  A dummy variable takes only 1 or 0. This is used to express
+  qualititative information
+\item
+  Example: Dummy variable for race \[
+  white_{i}=\begin{cases}
+  1 & if\ white\\
+  0 & otherwise
+  \end{cases} 
+   \]
+\item
+  The coefficient on a dummy variable captures the difference of the
+  outcome \(Y\) between categories
+\item
+  Consider the linear regression \[
+    Y_i = \beta_0 + \beta_1 white_i + \epsilon_i
+    \] The coefficient \(\beta_1\) captures the difference of \(Y\)
+  between white and non-white people.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Interaction term}
+\protect\hypertarget{interaction-term}{}
+
+\begin{itemize}
+\tightlist
+\item
+  You can add the interaction of two explanatory variables in the
+  regression model.
+\item
+  For example: \[
+    wage_i = \beta_0 + \beta_1 educ_i + \beta_2 white_i + \beta_3 educ_i \times white_i + \epsilon_i
+    \] where \(wage_i\) is the earnings of person \(i\) and \(educ_i\)
+  is the years of schooling for person \(i\).
+\item
+  The effect of \(educ_i\) is \[
+    \frac{\partial wage_i}{\partial educ_i} = \beta_1 + \beta_3 white_i,
+  \]
+\item
+  This allows for heterogenous effects of education across races.
+\end{itemize}
+
+\end{frame}
+
+\hypertarget{fit}{%
+\section{Fit}\label{fit}}
+
+\begin{frame}{Measures of Fit}
+\protect\hypertarget{measures-of-fit}{}
+
+\begin{itemize}
+\tightlist
+\item
+  We often use \(R^2\) as a measure of the model fit.
+\item
+  Denote \textbf{the fitted value} as \(\hat{y}_i\) \[
+   \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 X_{i1} + \cdots + \hat{\beta}_K X_{iK}
+  \]
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Also called prediction from the OLS regression.
+  \end{itemize}
+\item
+  \(R^2\) is defined as \[
+    R^2 = \frac{SSE}{TSS},
+    \] where \[ 
+     \  SSE = \sum_i (\hat{y}_i - \bar{y})^2, \ TSS = \sum_i (y_i - \bar{y})^2
+    \]
+\item
+  \(R^2\) captures the fraction of the variation of \(Y\) explained by
+  the regression model.
+\item
+  Adding variables always (weakly) increases \(R^2\).
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\tightlist
+\item
+  In a regression model with multiple explanatory variables, we often
+  use \textbf{adjusted} \(R^2\) that adjusts the number of explanatory
+  variables \[
+    \bar{R}^2 = 1 - \frac{N-1}{N-(K+1)} \frac{SSR}{TSS}
+  \] where \[
+    SSR = \sum_i (\hat{y}_i - y_i)^2 (= \sum_i \hat{u}_i^2 ),
+    \]
+\end{itemize}
+
+\end{frame}
+
+\hypertarget{inference}{%
+\section{Inference}\label{inference}}
+
+\begin{frame}{Statistical Inference}
+\protect\hypertarget{statistical-inference}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Notice that the OLS estimators are \textbf{random variables}. They
+  depend on the data, which are random variables drawn from some
+  population distribution.
+\item
+  We can conduct statistical inferences regarding those OLS estimators:
+  1. Hypothesis testing 2. Constructing confidence interval
+\item
+  I first explain the sampling distribution of the OLS estimators.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Distribution of the OLS estimators based on asymptotic
+theory}
+\protect\hypertarget{distribution-of-the-ols-estimators-based-on-asymptotic-theory}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Deriving the exact (finite-sample) distribution of the OLS estimators
+  is very hard.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The OLS estimators depend on the data \(Y_i, X_i\) in a complex way.
+  \item
+    We typically do not know the distribution of \(Y\) and \(X\).
+  \end{itemize}
+\item
+  We rely on \textbf{asymptotic} argument. We approximate the sampling
+  distribution of the OLS esimator based on the cental limit theorem.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\tightlist
+\item
+  Under the OLS assumption, the OLS estimator has \textbf{asymptotic
+  normality} \[
+  \sqrt{N}(\hat{\beta}-\beta)\overset{d}{\rightarrow}N\left(0,V \right)    
+    \] where \[
+    \underbrace{V}_{(K+1)\times(K+1)}
+     = E[\mathbf{x}_{i}'\mathbf{x}_{i}]^{-1}E[\mathbf{x}_{i}'\mathbf{x}_{i}\epsilon_{i}^{2}]E[\mathbf{x}_{i}'\mathbf{x}_{i}]^{-1}
+    \] and \[
+    \underbrace{\mathbf{x}_{i}}_{(K+1)\times1}=\left( 1, X_{i1},\cdots,X_{iK} \right)'
+  \]
+\item
+  We can \textbf{approximate} the distribution of \(\hat{\beta}\) by \[
+    \hat{\beta} \sim N(\beta, V / N)
+    \]
+\item
+  The above is joint distribution. Let \(V_{ij}\) be the \((i,j)\)
+  element of the matrix \(V\).
+\item
+  The individual coefficient \(\beta_k\) follows \[
+   \hat\beta_k \sim N(\beta_k, V_{kk} / N )
+  \]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Estimation of Asymptotic Variance}
+\protect\hypertarget{estimation-of-asymptotic-variance}{}
+
+\begin{itemize}
+\tightlist
+\item
+  \(V\) is an unknown object. Need to be estimated.
+\item
+  Consider the estimator \(\hat{V}\) for \(V\) using sample analogues \[
+    \hat{V}=\left(\frac{1}{N}\sum_{i=1}^{N}\mathbf{x}_{i}'\mathbf{x}_{i}\right)^{-1}\left(\frac{1}{N}\sum_{i=1}^{N}\mathbf{x}_{i}'\mathbf{x}_{i}\hat{\epsilon}_{i}^{2}\right)\left(\frac{1}{N}\sum_{i=1}^{N}\mathbf{x}_{i}'\mathbf{x}_{i}\right)^{-1}
+  \] where
+  \(\hat{\epsilon}_i = y_i - (\hat{\beta}_0 + \cdots + \hat{\beta}_K X_{iK})\)
+  is the residual.
+\item
+  Technically speaking, \(\hat{V}\) converges to \(V\) in probability.
+  (Proof is out of the scope of this course)
+\item
+  We often use the (asymptotic) \textbf{standard error}
+  \(SE(\hat{\beta_k}) = \sqrt{\hat{V}_{kk} / N }\).
+\item
+  The standard error is an estimator for the standard deviation of the
+  OLS estimator \(\hat{\beta_k}\).
+\end{itemize}
+
+\end{frame}
+
+\hypertarget{testing}{%
+\section{Testing}\label{testing}}
+
+\begin{frame}{Hypothesis testing}
+\protect\hypertarget{hypothesis-testing}{}
+
+\begin{itemize}
+\tightlist
+\item
+  OLS estimator is the random variable.
+\item
+  You might want to test a particular hypothesis regarding those
+  coefficients.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Does x really affects y?
+  \item
+    Is the production technology the constant returns to scale?
+  \end{itemize}
+\item
+  Here I explain how to conduct hypothesis testing.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{3 Steps in Hypothesis Testing}
+\protect\hypertarget{steps-in-hypothesis-testing}{}
+
+\begin{itemize}
+\item
+  Step 1: Consider the null hypothesis \(H_{0}\) and the alternative
+  hypothesis \(H_{1}\) \[
+    H_{0}:\beta_{1}=k,H_{1}:\beta_{1}\neq k
+    \] where \(k\) is the known number you set by yourself.
+\item
+  Step 2: Define \textbf{t-statistic} by \[
+    t_{n}=\frac{\hat{\beta_1}-k}{SE(\hat{\beta_1})}
+    \]
+\item
+  Step 3: We reject \(H_{0}\) is at \(\alpha\)-percent significance
+  level if \[|t_{n}|>C_{\alpha/2} 
+  \] where \(C_{\alpha/2}\) is the \(\alpha/2\) percentile of the
+  standard normal distribution.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We say we \textbf{fail to reject} \(H_0\) if the above does not
+    hold.
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Caveats on Hypothesis Testing}
+\protect\hypertarget{caveats-on-hypothesis-testing}{}
+
+\begin{itemize}
+\tightlist
+\item
+  We often say \(\hat{\beta}\) is \textbf{statistically significant} at
+  \(5\%\) level if \(|t_{n}|>1.96\) when we set \(k=0\).
+\item
+  Arguing the statistical significance alone is not enough for argument
+  in empirical analysis.
+\item
+  Magnitude of the coefficient is also important.
+\item
+  Case 1: Small but statistically significant coefficient.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    As the sample size \(N\) gets large, the \(SE\) decreases.
+  \end{itemize}
+\item
+  Case 2: Large but statistically insignificant coefficient.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The variable might have an important (economically meaningful)
+    effect.
+  \item
+    But you may not be able to estimate the effect precisely with the
+    sample at your hand.
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{F test}
+\protect\hypertarget{f-test}{}
+
+\begin{itemize}
+\tightlist
+\item
+  We often test a composite hypothesis that involves multiple parameters
+  such as \[
+   H_{0}:\beta_{1} + \beta_2 = 0,\ H_{1}:\beta_{1} + \beta_2 \neq 0
+  \]
+\item
+  We use \textbf{F test} in such a case (to be added).
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Confidence interval}
+\protect\hypertarget{confidence-interval}{}
+
+\begin{itemize}
+\tightlist
+\item
+  95\% confidence interval
+\end{itemize}
+
+\begin{align}
+    CI_{n}  &= \left\{ k:|\frac{\hat{\beta}_{1}-k}{SE(\hat{\beta}_{1})}|\leq1.96\right\} \\
+        &= \left[\hat{\beta}_{1}-1.96\times SE(\hat{\beta}_{1}),\hat{\beta_{1}}+1.96\times SE(\hat{\beta}_{1})\right]
+\end{align}
+
+\begin{itemize}
+\tightlist
+\item
+  Interpretation: If you draw many samples (dataset) and construct the
+  95\% CI for each sample, 95\% of those CIs will include the true
+  parameter.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Homoskedasticity vs Heteroskedasticity}
+\protect\hypertarget{homoskedasticity-vs-heteroskedasticity}{}
+
+\begin{itemize}
+\tightlist
+\item
+  So far, we did not put any assumption on the variance of the error
+  term \(\epsilon_i\).
+\item
+  The error term \(\epsilon_{i}\) has \textbf{heteroskedasticity} if
+  \(Var(u_{i}|X_{i})\) depends on \(X_{i}\).
+\item
+  If not, we call \(\epsilon_{i}\) has \textbf{homoskedasticity}.
+\item
+  This has an important implication on the asymptotic variance.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\tightlist
+\item
+  Remember the asymptotic variance \[
+    \underbrace{V}_{(K+1)\times(K+1)}
+     = E[\mathbf{x}_{i}'\mathbf{x}_{i}]^{-1}E[\mathbf{x}_{i}'\mathbf{x}_{i}\epsilon_{i}^{2}]E[\mathbf{x}_{i}'\mathbf{x}_{i}]^{-1}
+    \] Standard errors based on this is called
+  \textbf{heteroskedasticity robust standard errors}/
+\item
+  If homoskedasticity holds, then \[
+    V = E[\mathbf{x}_{i}'\mathbf{x}_{i}]^{-1}\sigma^{2}
+    \] where \(\sigma^2 = V(\epsilon_i)\).
+\item
+  In many statistical packages (including R and Stata), the standard
+  errors for the OLS estimators are calcualted under homoskedasticity
+  assumption as a default.
+\item
+  However, if the error has heteroskedasticity, the standard error under
+  homoskedasticity assumption will be \textbf{underestimated}.
+\item
+  In OLS, \textbf{we should always use heteroskedasticity robust
+  standard error.}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We will see how to fix this in R.
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\end{document}
