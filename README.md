@@ -25,7 +25,7 @@ This is maintained by [Yuta Toyama](https://yutatoyama.github.io/).
 | 6   | Regression 2            | [[Note]](04_Regression/Regression2.html)                | [[Slide]](04_Regression/Regression2.pdf)                | [[RMD]](04_Regression/Regression2.Rmd)                |
 | 7   | Regression 3            | [[Note]](04_Regression/Regression3.html)                | [[Slide]](04_Regression/Regression3.pdf)                | [[RMD]](04_Regression/Regression3.Rmd)                |
 | 8   | Instrumental variable 1 | [[Note]](05_IV/IV1.html)                                | [[Slide]](05_IV/IV1.pdf)                                | [[RMD]](05_IV/IV1.Rmd)                                |
-| 9   | Instrumental variable 2 | [[Note]](05_IV/IV2.html)                                | [[Slide]](05_IV/IV2.pdf)                                | [[RMD]](05_IV/IV2.Rmd)                                |
+| 9   | Instrumental variable 2 | [[Note]](05_IV/IV2.html)                                | [[Slide]](05_IV/IV2.pdf)                                | [[RMD]](05_IV/IV2.Rmd), [[Data]](05_IV/Data_IVregression.zip)                                |
 | 10  | Panel data 1            | [[Note]](06_Panel/Panel1.html)                          | [[Slide]](06_Panel/Panel1.pdf)                          | [[RMD]](06_Panel/Panel1.Rmd)                          |
 | 11  | Panel data 2            | [[Note]](06_Panel/Panel2.html)                          | [[Slide]](06_Panel/Panel2.pdf)                          | [[RMD]](06_Panel/Panel2.Rmd)                          |
 | 12  | Program Evaluation 1    | [[Note]](07_ProgramEvaluation/ProgramEvaluation1.html)  | [[Slide]](07_ProgramEvaluation/ProgramEvaluation1.pdf)  | [[RMD]](07_ProgramEvaluation/ProgramEvaluation1.Rmd)  |
