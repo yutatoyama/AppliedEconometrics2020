@@ -1,7 +1,7 @@
 ---
 title: "Panel Data 2: Implementation in R"
 author: "Instructor: Yuta Toyama"
-date: "Last updated: 2020-03-30"
+date: "Last updated: 2020-06-29"
 fig_width: 6 
 fig_height: 4 
 output: 
@@ -43,7 +43,15 @@ library(AER)
 ```
 
 ```
+## Warning: package 'AER' was built under R version 3.6.3
+```
+
+```
 ## Loading required package: car
+```
+
+```
+## Warning: package 'car' was built under R version 3.6.3
 ```
 
 ```
@@ -56,6 +64,10 @@ library(AER)
 
 ```
 ## Loading required package: zoo
+```
+
+```
+## Warning: package 'zoo' was built under R version 3.6.3
 ```
 
 ```
@@ -131,6 +143,10 @@ library("dplyr")
 ```
 
 ```
+## Warning: package 'dplyr' was built under R version 3.6.3
+```
+
+```
 ## 
 ## Attaching package: 'dplyr'
 ```
@@ -186,6 +202,10 @@ library("lfe")
 ```
 
 ```
+## Warning: package 'lfe' was built under R version 3.6.2
+```
+
+```
 ## Loading required package: Matrix
 ```
 
@@ -219,17 +239,17 @@ summary(result_ols, robust = TRUE)
 ## -1.09060 -0.37768 -0.09436  0.28548  2.27643 
 ## 
 ## Coefficients:
-##             Estimate Robust s.e t value             Pr(>|t|)    
-## (Intercept)  1.85331    0.04713  39.324 < 0.0000000000000002 ***
-## beertax      0.36461    0.05285   6.899      0.0000000000264 ***
+##             Estimate Robust s.e t value Pr(>|t|)    
+## (Intercept)  1.85331    0.04713  39.324  < 2e-16 ***
+## beertax      0.36461    0.05285   6.899 2.64e-11 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.5437 on 334 degrees of freedom
 ## Multiple R-squared(full model): 0.09336   Adjusted R-squared: 0.09065 
 ## Multiple R-squared(proj model): 0.09336   Adjusted R-squared: 0.09065 
-## F-statistic(full model, *iid*):34.39 on 1 and 334 DF, p-value: 0.00000001082 
-## F-statistic(proj model): 47.59 on 1 and 334 DF, p-value: 0.00000000002643
+## F-statistic(full model, *iid*):34.39 on 1 and 334 DF, p-value: 1.082e-08 
+## F-statistic(proj model): 47.59 on 1 and 334 DF, p-value: 2.643e-11
 ```
 
 ```r
@@ -256,7 +276,7 @@ summary(result_stateFE, robust = TRUE)
 ## Residual standard error: 0.1899 on 287 degrees of freedom
 ## Multiple R-squared(full model): 0.905   Adjusted R-squared: 0.8891 
 ## Multiple R-squared(proj model): 0.04074   Adjusted R-squared: -0.1197 
-## F-statistic(full model, *iid*):56.97 on 48 and 287 DF, p-value: < 0.00000000000000022 
+## F-statistic(full model, *iid*):56.97 on 48 and 287 DF, p-value: < 2.2e-16 
 ## F-statistic(proj model):  5.05 on 1 and 47 DF, p-value: 0.02936
 ```
 
@@ -284,12 +304,24 @@ summary(result_bothFE, robust = TRUE)
 ## Residual standard error: 0.1879 on 281 degrees of freedom
 ## Multiple R-squared(full model): 0.9089   Adjusted R-squared: 0.8914 
 ## Multiple R-squared(proj model): 0.03606   Adjusted R-squared: -0.1492 
-## F-statistic(full model, *iid*):51.93 on 54 and 281 DF, p-value: < 0.00000000000000022 
+## F-statistic(full model, *iid*):51.93 on 54 and 281 DF, p-value: < 2.2e-16 
 ## F-statistic(proj model): 3.271 on 1 and 47 DF, p-value: 0.07692
 ```
 
+Report results using stargazer.
+Note that 
+  - Setting "se" option reports Heteroskedasticity-robust SE for the first column.
+  - Automatically report Cluster-Robust SE for the second and the third columns.
+
+
 ```r
-stargazer::stargazer(result_ols, result_stateFE, result_bothFE, type = "text")
+list_StateFE = c("State FE", "No", "Yes", "Yes")
+list_yearFE = c("Year FE", "No", "No", "Yes")
+
+stargazer::stargazer(result_ols, result_stateFE, result_bothFE, 
+                     se = list(result_ols$rse),
+                     add.lines = list(list_StateFE, list_yearFE),
+                     type = "text")
 ```
 
 ```
@@ -301,12 +333,14 @@ stargazer::stargazer(result_ols, result_stateFE, result_bothFE, type = "text")
 ##                           (1)              (2)              (3)       
 ## ----------------------------------------------------------------------
 ## beertax                 0.365***         -0.656**         -0.640*     
-##                         (0.062)          (0.292)          (0.354)     
+##                         (0.053)          (0.292)          (0.354)     
 ##                                                                       
 ## Constant                1.853***                                      
-##                         (0.044)                                       
+##                         (0.047)                                       
 ##                                                                       
 ## ----------------------------------------------------------------------
+## State FE                   No              Yes              Yes       
+## Year FE                    No               No              Yes       
 ## Observations              336              336              336       
 ## R2                       0.093            0.905            0.909      
 ## Adjusted R2              0.091            0.889            0.891      
@@ -328,27 +362,29 @@ result_wo_CRS <- felm( fatal_rate ~ beertax  | state | 0 | 0, data = data )
 result_w_CRS <- felm( fatal_rate ~ beertax  | state | 0 | state, data = data )
 
 # Report heteroskedasticity robust standard error and cluster-robust standard errors
-stargazer::stargazer(result_wo_CRS, result_w_CRS,  type = "text", se = list(summary(result_wo_CRS)$rse, NULL))
+stargazer::stargazer(result_wo_CRS, result_w_CRS,  type = "text", se = list(result_wo_CRS$rse),
+                     add.lines = list(c("SE", "Heteroskedasticity-Robust", "Cluster-Robust")))
 ```
 
 ```
 ## 
-## ===========================================================
-##                                    Dependent variable:     
-##                                ----------------------------
-##                                         fatal_rate         
-##                                     (1)            (2)     
-## -----------------------------------------------------------
-## beertax                          -0.656***      -0.656**   
-##                                   (0.190)        (0.292)   
-##                                                            
-## -----------------------------------------------------------
-## Observations                        336            336     
-## R2                                 0.905          0.905    
-## Adjusted R2                        0.889          0.889    
-## Residual Std. Error (df = 287)     0.190          0.190    
-## ===========================================================
-## Note:                           *p<0.1; **p<0.05; ***p<0.01
+## =======================================================================
+##                                          Dependent variable:           
+##                                ----------------------------------------
+##                                               fatal_rate               
+##                                           (1)                 (2)      
+## -----------------------------------------------------------------------
+## beertax                                -0.656***            -0.656**   
+##                                         (0.203)             (0.292)    
+##                                                                        
+## -----------------------------------------------------------------------
+## SE                             Heteroskedasticity-Robust Cluster-Robust
+## Observations                              336                 336      
+## R2                                       0.905               0.905     
+## Adjusted R2                              0.889               0.889     
+## Residual Std. Error (df = 287)           0.190               0.190     
+## =======================================================================
+## Note:                                       *p<0.1; **p<0.05; ***p<0.01
 ```
 
 # Panel + IV
@@ -488,15 +524,11 @@ ftest1
 ```
 
 ```
-##                               p                            chi2 
-##  0.0000000000000000000004180596 98.4528366392834328735261806287 
-##                             df1                             p.F 
-##  2.0000000000000000000000000000  0.0000000000000026217009797120 
-##                               F                             df2 
-## 49.2264183196417164367630903143 93.0000000000000000000000000000 
+##            p         chi2          df1          p.F            F          df2 
+## 4.180596e-22 9.845284e+01 2.000000e+00 2.621701e-15 4.922642e+01 9.300000e+01 
 ## attr(,"formula")
 ## ~rincome | rprice
-## <environment: 0x000000001f1260a0>
+## <environment: 0x000000001eb84540>
 ```
 
 ```r
@@ -510,15 +542,11 @@ ftest2
 ```
 
 ```
-##                                  p                               chi2 
-##   0.000000000000000000000002048665 109.089707794080325697905209381133 
-##                                df1                                p.F 
-##   2.000000000000000000000000000000   0.000000000000000212154377173804 
-##                                  F                                df2 
-##  54.544853897040162848952604690567  93.000000000000000000000000000000 
+##            p         chi2          df1          p.F            F          df2 
+## 2.048665e-24 1.090897e+02 2.000000e+00 2.121544e-16 5.454485e+01 9.300000e+01 
 ## attr(,"formula")
 ## ~rincome - 1 | rprice
-## <environment: 0x000000001f292c80>
+## <environment: 0x000000001ee6a330>
 ```
 
 ```r

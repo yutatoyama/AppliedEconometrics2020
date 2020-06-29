@@ -6,6 +6,13 @@ fig_width: 6
 fig_height: 4 
 output: 
   
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "lily"
+    slide_level: 2
+    includes:
+      in_header: "../beamer_header.tex"
+    df_print: tibble
   html_document:
     theme: lumen
     highlight: haddock 
@@ -16,13 +23,6 @@ output:
     toc_float: true
     keep_md: true
     df_print: paged
-  beamer_presentation:
-    theme: "Madrid"
-    colortheme: "lily"
-    slide_level: 2
-    includes:
-      in_header: "../beamer_header.tex"
-    df_print: tibble
 ---
 
 # Panel
@@ -99,8 +99,22 @@ summary(result_stateFE, robust = TRUE)
 result_bothFE <- felm( fatal_rate ~ beertax  | state + year | 0 | state, data = data )
 summary(result_bothFE, robust = TRUE)
 
+```
 
-stargazer::stargazer(result_ols, result_stateFE, result_bothFE, type = "text")
+Report results using stargazer.
+Note that 
+  - Setting "se" option reports Heteroskedasticity-robust SE for the first column.
+  - Automatically report Cluster-Robust SE for the second and the third columns.
+
+```{r}
+
+list_StateFE = c("State FE", "No", "Yes", "Yes")
+list_yearFE = c("Year FE", "No", "No", "Yes")
+
+stargazer::stargazer(result_ols, result_stateFE, result_bothFE, 
+                     se = list(result_ols$rse),
+                     add.lines = list(list_StateFE, list_yearFE),
+                     type = "text")
 
 
 ```
@@ -118,7 +132,8 @@ result_wo_CRS <- felm( fatal_rate ~ beertax  | state | 0 | 0, data = data )
 result_w_CRS <- felm( fatal_rate ~ beertax  | state | 0 | state, data = data )
 
 # Report heteroskedasticity robust standard error and cluster-robust standard errors
-stargazer::stargazer(result_wo_CRS, result_w_CRS,  type = "text", se = list(summary(result_wo_CRS)$rse, NULL))
+stargazer::stargazer(result_wo_CRS, result_w_CRS,  type = "text", se = list(result_wo_CRS$rse),
+                     add.lines = list(c("SE", "Heteroskedasticity-Robust", "Cluster-Robust")))
 
 ```
 
