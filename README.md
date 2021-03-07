@@ -2,7 +2,7 @@
 
 ## Update (3/7/2021): 2021年度夏クォーターの履修者の皆様へ。
 ここには2020年度春学期の授業ノートを載せています。21年度は内容の順番が変更される予定です。
-21年度については、以下のホームページを参照ください。(5月後半に更新予定) https://yutatoyama.github.io/AppliedEconometrics2021/
+21年度については、以下のホームページを参照ください。(5月後半に更新予定) [https://yutatoyama.github.io/AppliedEconometrics2021/](https://yutatoyama.github.io/AppliedEconometrics2021/)
 
 ## Introduction
 This website is for applied econometrics course for undergraduate students at Waseda university. 
